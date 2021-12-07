@@ -37,7 +37,11 @@
   },
   "type": "module",
   "dependencies": {
+    "contentful": "^9.1.4",
     "dotenv": "^10.0.0",
-    "front-matter": "^4.0.2"
+    "front-matter": "^4.0.2",
+    "fs-extra": "^10.0.0",
+    "sass": "^1.44.0",
+    "snarkdown": "^2.0.0"
   }
 }

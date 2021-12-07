@@ -1,4 +1,9 @@
-/** @type {import('@sveltejs/kit').Config} */
+////////////////////////////////////
+//////////// Github ////////////////
+////////////////////////////////////
+
+//////////// deprecated ////////////
+
 import { Octokit } from "@octokit/core";
 import dotenv from "dotenv";
 import { parser } from "./markdown.js";

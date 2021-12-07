@@ -9,6 +9,7 @@
   "homepage": "https://github.com/Marcosaurios/recipes",
   "version": "0.0.1",
   "scripts": {
+    "fetchContent": "node scripts/preload.js",
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
@@ -36,7 +37,11 @@
   },
   "type": "module",
   "dependencies": {
+    "contentful": "^9.1.4",
     "dotenv": "^10.0.0",
+    "front-matter": "^4.0.2",
+    "fs-extra": "^10.0.0",
+    "sass": "^1.44.0",
     "snarkdown": "^2.0.0"
   }
 }

@@ -1,20 +1,66 @@
 <script context="module">
-import api from "../_prebuild/api";
+export async function load({ page, fetch }) {
+  const res = await fetch(`index.json`);
 
-export async function load() {
-  // TODO add loaded content
-  // TODO load routes/[slug].svelte && 
-  // TODO See what routes/[slug].json.js does??
+  if (res.ok) {
+    return {
+      props: {
+        data: await res.json(),
+      },
+    };
+  }
+
   return {
-    props: 4,
+    status: res.status,
+    error: new Error(`Could not load ${"content/recipes"}`),
   };
 }
 </script>
 
-<script>
+<script lang="ts">
+import type { Recipe } from "src/_types/Recipe";
+import RecipePreview from "$lib/atoms/recipe-preview.svelte";
+import Ingredient from "$lib/atoms/ingredient.svelte";
+
+type DataResponse = {
+  recipes: Array<Recipe>;
+  ingredients: Array<String>;
+};
+
+export let data: DataResponse;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation∫
-</p>
+<h1>Recetario</h1>
+
+<div>
+  <input type="text" class="search" />
+</div>
+
+<div class="ingredients">
+  {#each data.ingredients as i}
+    <Ingredient title="{i}" />
+  {/each}
+</div>
+
+<ul class="recipes">
+  {#each data.recipes as r}
+    <li>
+      <RecipePreview title="{r.title}" url="{r.url}" />
+    </li>
+  {/each}
+</ul>
+
+<style lang="scss" scoped>
+ul {
+  list-style: none;
+
+  margin: inherit;
+  padding: inherit;
+}
+
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

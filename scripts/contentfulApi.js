@@ -5,11 +5,8 @@
 // DONE fetch all content
 // TODO author
 
-// TODO porque cojones no van las rutas
-
 import contentful from "contentful";
 import dotenv, { parse } from "dotenv";
-import { parser } from "./markdown.js";
 dotenv.config();
 
 // CMS client init
@@ -30,7 +27,6 @@ export default {
     return recipes;
   },
   async offlineRecipes() {
-    // TODO fake response
     return {
       sys: { type: "Array" },
       total: 2,

@@ -13,3 +13,6 @@ jspm_packages/
 
 # Svelte
 .svelte-kit
+
+# Content fetched from CMS
+content/

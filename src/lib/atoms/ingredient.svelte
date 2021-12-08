@@ -1,5 +1,6 @@
 <script>
 export let title;
+// TODO add selected ingredient
 </script>
 
 <div>

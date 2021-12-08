@@ -15,7 +15,7 @@ const repo = process.env.VITE_GIT_REPO;
 const octokit = new Octokit({ auth: personal_access_token });
 
 export default {
-  // TODO paginated to 30, make it wider
+  // paginated to 30, make it wider
   getIssues() {
     return octokit
       .request("GET /repos/{owner}/{repo}/issues", {
@@ -33,7 +33,6 @@ function parseResponse(res) {
   }
 
   return res.data.map((issue, i) => {
-    // TODO parse markdown to get ingredients, categories
     const md = parser(issue.body);
 
     const ingredients = md.attributes.ingredients || [];

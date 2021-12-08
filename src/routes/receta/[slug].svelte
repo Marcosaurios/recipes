@@ -25,6 +25,8 @@ export let data;
 import { parser } from "$lib/markdown";
 </script>
 
+<main></main>
+
 <h2>{data.recipe.title}</h2>
 
 <ul>

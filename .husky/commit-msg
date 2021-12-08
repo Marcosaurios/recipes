@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx --no -- commitlint --edit ""
-npx --no -- commitlint --config commitlint.config.js --edit ""
+npx --no -- commitlint --config commitlint.config.cjs --edit ""

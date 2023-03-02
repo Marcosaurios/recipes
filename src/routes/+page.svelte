@@ -1,20 +1,20 @@
 <script context="module">
-export async function load({ page, fetch }) {
-  const res = await fetch(`index.json`);
+// export async function load({ page, fetch }) {
+//   const res = await fetch(`index.json`);
 
-  if (res.ok) {
-    return {
-      props: {
-        data: await res.json(),
-      },
-    };
-  }
+//   if (res.ok) {
+//     return {
+//       props: {
+//         data: await res.json(),
+//       },
+//     };
+//   }
 
-  return {
-    status: res.status,
-    error: new Error(`Could not load ${"content/recipes"}`),
-  };
-}
+//   return {
+//     status: res.status,
+//     error: new Error(`Could not load ${"content/recipes"}`),
+//   };
+// }
 </script>
 
 <script lang="ts">

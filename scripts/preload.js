@@ -1,19 +1,68 @@
 import { cwd } from "process";
-
-import api from "./contentfulApi.js";
 import { createRequire } from "module";
+import dotenv from "dotenv"
+import {parse as ingredienteParse} from "ingrediente-parser"
 
+import api from "../apis/contentful/index.js";
+
+dotenv.config()
+const VERBOSE = !!(process.env.VITE_VERBOSE_FETCH === 'true')
 // Require hack to load dependency
 const require = createRequire(import.meta.url);
 const fs = require("fs-extra");
 
+// Generated content
+// TODO maybe write recipes per ingredient
 const PATH_STATIC = "content";
 const PATH_ALL_RECIPES = `${PATH_STATIC}/_recipes.json`;
 const PATH_INGREDIENTS = `${PATH_STATIC}/_ingredients.json`;
 const PATH_URLS = `${PATH_STATIC}/_urls.json`;
 const PATH_RECIPES = `${PATH_STATIC}/recipes`;
 
-const ingredientsOrder = {};
+const parser = {
+  urls: [],
+  ingredients: [],
+  ingredientsCounter: [],
+
+  init: () => {
+    parser.urls = ["*"]
+    parser.ingredients = []
+    return parser
+  },
+  readUrl: (urlCMS)  => {
+    const url = `/receta/${urlCMS}`;
+    parser.urls.push(url);
+    return url
+  },
+  readIngredients: (ingredientsCMS = []) => {
+    if (!ingredientsCMS.length) return [];
+    
+    const toSearch = ingredientsCMS
+      .map((_ingredient) => {
+        const parsed = ingredienteParse(_ingredient)
+        const ingredient = parsed.ingredient;
+        if (!ingredient) return false;
+        VERBOSE ? console.log("Ingredient: ", ingredient) : 0
+
+        parser.ingredientsCounter[ingredient] = (parser.ingredientsCounter[ingredient]+1) || 1
+        return ingredient;
+      })
+      .filter((x) => x != false);
+
+      parser.ingredients.push(...toSearch)
+    return toSearch;
+  },
+  parseRecipe: (_recipe) => {
+    const url = parser.readUrl(_recipe.slug)
+    const ing = parser.readIngredients(_recipe.ingredients);
+
+    return {
+      ..._recipe,
+      url,
+      searchableIngredients: ing,
+    };
+  }
+}
 
 /**
  * Fetch the content we need from CMS
@@ -26,98 +75,40 @@ const ingredientsOrder = {};
  * @returns Array<String>
  */
 async function preload() {
-  const urls = ["*"];
-  const _ingredients = [];
   const _recipes = await api.getRecipes();
+  VERBOSE ? console.log(_recipes) : 0
+  const p = parser.init()
 
-  // final recipes object
-  const recipes = _recipes.map((_recipe) => {
-    // save urls
-    const url = `/receta/${_recipe.slug}`;
-    urls.push(url);
+  const recipes = _recipes.map(p.parseRecipe);
+  const ingredients = [...new Set(p.ingredients)];
+  const urls = p.urls
 
-    // make ingredients searchable
-    const ing = searchableIngredients(_recipe.ingredients);
-    _ingredients.push(...ing);
-    // save ingredients in recipe
-    const recipe = {
-      ..._recipe,
-      url,
-      searchableIngredients: ing,
-    };
-
-    // STORE Individual recipes
-    write(`${cwd()}/${PATH_RECIPES}/${recipe.slug}.json`, recipe);
-
-    return recipe;
-  });
-
-  // Unique ingredients list
-  const ingredients = [...new Set(_ingredients)];
-
-  write(`${cwd()}/${PATH_ALL_RECIPES}`, recipes);
-  write(`${cwd()}/${PATH_INGREDIENTS}`, ingredients);
-  write(`${cwd()}/${PATH_URLS}`, urls);
+  writter.writeAll(recipes, ingredients, urls)
 
   // CLI feedback
-  console.log("-- Ingredients to search are: ", ingredients);
-  console.log(ingredientsOrder);
-  console.log("-- Fetched these pages: ", recipes);
+  VERBOSE ? console.log("-- Ingredients to search are: ", ingredients) : 0
+  // console.log(ingredientsOrder);
+  VERBOSE ? console.log("-- Fetched these pages: ", recipes) : 0;
 }
 
-/**
- * Writes a JSON file in `path` with `data`
- * @param {String} path Where to store the `data`
- * @param data Data to store
- * @returns
- */
-const write = async (path, data) =>
-  fs.outputFile(path, JSON.stringify(data), (err) =>
-    err ? console.log("Error stringifying ", err) : 0
-  );
-
-/**
- * Sanitizes the ingredients from the CMS and creates single ingredients
- * @param {Array} ingredients
- * @returns {Array}
- */
-function searchableIngredients(ingredients) {
-  // Ignore words with digits, or "de" word
-  const regex = RegExp(/\b[^\d\W](?<=[^de]).+/, "i");
-
-  if (!ingredients.length) return [];
-
-  const toSearch = ingredients
-    .map((e) => {
-      // console.log("---- Parsing ", e);
-      // lowercase always
-      e = `${e}`.toLowerCase();
-      let parsed = regex.exec(e);
-      if (!parsed) return false;
-
-      let ingredient = parsed[0];
-      // console.log(ingredient);
-
-      countIngredient(ingredient);
-      return ingredient;
-    })
-    .filter((x) => x != false);
-
-  return toSearch;
-}
-
-/**
- * Helper function to store the amount each ingredient appears,
- * so we can sort them by their usage.
- * @param {String} ingredient
- */
-function countIngredient(ingredient) {
-  let count = ingredientsOrder[ingredient];
-  if (!count) {
-    ingredientsOrder[ingredient] = 0;
+const writter = {
+  /**
+   * Writes a JSON file in `path` with `data`
+   * @param {String} path Where to store the `data`
+   * @param data Data to store
+   * @returns
+   */
+  write: async (path, data) => {
+    fs.outputFile(path, JSON.stringify(data), (err) =>
+      err ? console.log("Error stringifying ", err) : 0
+    );
+  },
+  writeAll: (recipes, ingredients, urls) => {
+    writter.write(`${cwd()}/${PATH_ALL_RECIPES}`, recipes);
+    writter.write(`${cwd()}/${PATH_INGREDIENTS}`, ingredients);
+    writter.write(`${cwd()}/${PATH_URLS}`, urls);
+    recipes.forEach(r => writter.write(`${cwd()}/${PATH_RECIPES}/${r.slug}.json`, r));
   }
-
-  ingredientsOrder[ingredient]++;
 }
 
 preload();

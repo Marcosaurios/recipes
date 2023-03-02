@@ -13,3 +13,7 @@ jspm_packages/
 
 # Svelte
 .svelte-kit
+.build
+
+# Repository misc.
+content

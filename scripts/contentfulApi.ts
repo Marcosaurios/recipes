@@ -2,27 +2,28 @@
 ////////////// CMS /////////////////
 ////////////////////////////////////
 
-// DONE fetch all content
 // TODO author
 
-import contentful from "contentful";
-import dotenv, { parse } from "dotenv";
-dotenv.config();
+import { createClient } from "contentful";
+import { config } from "dotenv";
+config();
+import type { Recipe } from "types/Recipe";
+
+const VERBOSE = process.env.VITE_FETCH_VERBOSE === "true";
 
 // CMS client init
-const space = process.env.VITE_CONTENTFUL_SPACE;
-const accessToken = process.env.VITE_CONTENTFUL_CD_API;
-const c = contentful.createClient({
-  space,
-  accessToken,
+const API_SPACE = process.env.VITE_CONTENTFUL_SPACE;
+const API_ACCESSTOKEN = process.env.VITE_CONTENTFUL_CD_API;
+const API = createClient({
+  space: API_SPACE,
+  accessToken: API_ACCESSTOKEN,
 });
-
 // CMS typings
-const RECIPES_CONTENT_TYPE = "receta";
+const API_CONTENT_TYPE = "receta";
 
 export default {
   async getRecipes() {
-    const res = await c.getEntries({ content_type: RECIPES_CONTENT_TYPE });
+    const res = await API.getEntries({ content_type: API_CONTENT_TYPE });
     const recipes = res.items.map(parseRecipes);
     return recipes;
   },
@@ -79,21 +80,27 @@ function parseRecipes(e) {
   const updated = e.sys.updatedAt;
   const created = e.sys.createdAt;
 
-  let slug = field.slug;
+  const slug = e.fields.slug;
+  const url = `receta/${slug}`;
   // if (e.sys.contentType.sys.id == RECIPES_CONTENT_TYPE) {
   //   slug = `/${RECIPES_CONTENT_TYPE}/${field.slug}`;
   // }
+  console.log("fetched this");
+  console.log(e);
 
-  const recipe = {
+  const recipe: Recipe = {
     title: field.titulo,
     body: field.descripcion,
     ingredients: field.ingredientes,
+    minutes: field.minutes,
+    difficult: field.difficult,
     slug,
+    url,
     created,
     updated,
   };
 
-  console.log("Fetched recipe ", recipe);
+  VERBOSE ? console.log("Fetched recipe ", recipe) : 0;
 
   return recipe;
 }

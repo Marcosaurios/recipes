@@ -28,12 +28,22 @@
       "$comp/*": ["src/components/*"]
     }
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "Commonjs",
+      "moduleResolution": "Node",
+      "esModuleInterop": true
+    }
+  },
   "include": [
     "src/**/*.d.ts",
     "src/**/*.js",
     "src/**/*.ts",
     "src/**/*.svelte",
     "scripts/**/*.js",
-    "content/*"
+    "content/*",
+    "scripts/preload.ts",
+    "scripts/contentfulApi.ts",
+    "types/Recipe.ts"
   ]
 }

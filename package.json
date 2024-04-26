@@ -9,7 +9,7 @@
   "homepage": "https://github.com/Marcosaurios/recipes",
   "version": "0.0.1",
   "scripts": {
-    "fetchContent": "node scripts/preload.js",
+    "fetchContent": "ts-node scripts/preload.ts --verbose",
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
@@ -23,7 +23,7 @@
     "@commitlint/config-conventional": "^15.0.0",
     "@octokit/core": "^3.5.1",
     "@sveltejs/adapter-static": "^1.0.0-next.21",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "^1.0.0-next.266",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
@@ -35,15 +35,16 @@
     "svelte": "^3.42.6",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.8",
+    "ts-node": "^10.5.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "type": "module",
   "dependencies": {
     "contentful": "^9.1.4",
     "dotenv": "^10.0.0",
     "front-matter": "^4.0.2",
     "fs-extra": "^10.0.0",
+    "ingrediente-parser": "^1.0.2",
     "sass": "^1.44.0",
     "snarkdown": "^2.0.0"
   }

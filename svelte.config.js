@@ -7,9 +7,7 @@ const urls = JSON.parse(await readFile("./content/_urls.json"));
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   preprocess: preprocess(),
-
   kit: {
-    target: "#svelte",
     adapter: adapter(),
     prerender: {
       crawl: true,

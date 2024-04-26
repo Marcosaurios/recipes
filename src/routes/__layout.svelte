@@ -1,9 +1,11 @@
 <!-- Shared components across the website -->
-<nav>
-  <a href="/">Logo</a>
-</nav>
+<main>
+  <nav>
+    <a href="/">Logo</a>
+  </nav>
 
-<slot />
+  <slot />
+</main>
 
 <style lang="scss" global>
 html {
@@ -33,5 +35,10 @@ a:active {
 }
 body {
   background-color: #b6cfea;
+}
+
+main {
+  max-width: 730px;
+  margin: 0 auto;
 }
 </style>

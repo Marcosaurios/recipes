@@ -34,7 +34,6 @@ export async function get({ params }) {
   //   params: { slug: 'tortilla-francesa' },
   //   locals: {}
   // }
-  console.log("getting ", params.slug);
 
   return {
     body: {

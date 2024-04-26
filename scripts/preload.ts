@@ -1,12 +1,13 @@
 import { cwd } from "process";
+import { config } from "dotenv";
+config();
 
-import api from "./contentfulApi.js";
-import { createRequire } from "module";
+import api from "./contentfulApi";
+import { parse } from "ingrediente-parser";
+import fs from "fs-extra";
 
-// Require hack to load dependency
-const require = createRequire(import.meta.url);
-const fs = require("fs-extra");
-
+// ----- CONSTANTS ------
+const VERBOSE = process.env.VITE_FETCH_VERBOSE === "true";
 const PATH_STATIC = "content";
 const PATH_ALL_RECIPES = `${PATH_STATIC}/_recipes.json`;
 const PATH_INGREDIENTS = `${PATH_STATIC}/_ingredients.json`;
@@ -19,8 +20,8 @@ const ingredientsOrder = {};
  * Fetch the content we need from CMS
  * before the compilation happens.
  *
- * This fetches EVERY dynamic URL that will be fetched inside our blog.
- * Let´s say, we are going to query "/ingredients/tomatoes", then Svelte will know the tag we want to query.
+ * This creates EVERY dynamic URL that will be fetched inside our blog.
+ * Let´s say, we are going to query "/recetas/tortilla-patatas", then Svelte will know the tag we want to query.
  * Also fetches the content.
  *
  * @returns Array<String>
@@ -71,7 +72,7 @@ async function preload() {
  * @param data Data to store
  * @returns
  */
-const write = async (path, data) =>
+const write = (path, data) =>
   fs.outputFile(path, JSON.stringify(data), (err) =>
     err ? console.log("Error stringifying ", err) : 0
   );
@@ -82,26 +83,24 @@ const write = async (path, data) =>
  * @returns {Array}
  */
 function searchableIngredients(ingredients) {
-  // Ignore words with digits, or "de" word
-  const regex = RegExp(/\b[^\d\W](?<=[^de]).+/, "i");
+  // Old ingredients parser
+  // const regex = RegExp(/\b[^\d\W](?<=[^de]).+/, "i");
 
   if (!ingredients.length) return [];
 
   const toSearch = ingredients
     .map((e) => {
-      // console.log("---- Parsing ", e);
-      // lowercase always
-      e = `${e}`.toLowerCase();
-      let parsed = regex.exec(e);
+      let parsed = parse(e);
       if (!parsed) return false;
 
-      let ingredient = parsed[0];
-      // console.log(ingredient);
+      let ingredient = parsed.ingredient;
+      VERBOSE ? console.log("---- Parsing:", e, "->", ingredient) : 0;
 
       countIngredient(ingredient);
       return ingredient;
     })
     .filter((x) => x != false);
+  // cleaned unprocessable ingredients
 
   return toSearch;
 }

@@ -1,9 +1,9 @@
 <script context="module">
 /** @type {import('@sveltejs/kit').Load} */
-export async function load({ page, fetch }) {
-  const url = `/receta/${page.params.slug}.json`;
-  const res = await fetch(url);
-  console.log(url, res.status);
+export async function load({ url, fetch, params }) {
+  const res = await fetch(`/receta/${params.slug}.json`);
+
+  console.log("backend getting recipe: ", url, res.status);
 
   if (res.ok) {
     return {
@@ -24,8 +24,6 @@ export async function load({ page, fetch }) {
 export let data;
 import { parser } from "$lib/markdown";
 </script>
-
-<main></main>
 
 <h2>{data.recipe.title}</h2>
 

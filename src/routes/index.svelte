@@ -1,18 +1,22 @@
 <script context="module">
-export async function load({ page, fetch }) {
-  const res = await fetch(`index.json`);
+export async function load({ fetch, params }) {
+  const res = await fetch(`recetas.json`);
+  console.log("loading recetas... ", res.status);
+  console.log(res);
+  const body = await res.json();
+  console.log(body);
 
   if (res.ok) {
     return {
       props: {
-        data: await res.json(),
+        data: body,
       },
     };
   }
 
   return {
     status: res.status,
-    error: new Error(`Could not load ${"content/recipes"}`),
+    error: new Error(`Could not load "content/index.json" ${res}`),
   };
 }
 </script>
@@ -20,7 +24,7 @@ export async function load({ page, fetch }) {
 <script lang="ts">
 import type { Recipe } from "src/_types/Recipe";
 import RecipePreview from "$lib/atoms/recipe-preview.svelte";
-import Ingredient from "$lib/atoms/ingredient.svelte";
+import Searchbar from "$lib/molecules/searchbar.svelte";
 
 type DataResponse = {
   recipes: Array<Recipe>;
@@ -28,19 +32,12 @@ type DataResponse = {
 };
 
 export let data: DataResponse;
+
+let inputSearch = "";
+$: console.log(inputSearch);
 </script>
 
-<h1>Recetario</h1>
-
-<div>
-  <input type="text" class="search" />
-</div>
-
-<div class="ingredients">
-  {#each data.ingredients as i}
-    <Ingredient title="{i}" />
-  {/each}
-</div>
+<Searchbar ingredients="{data.ingredients}" bind:input="{inputSearch}" />
 
 <ul class="recipes">
   {#each data.recipes as r}
@@ -54,13 +51,7 @@ export let data: DataResponse;
 ul {
   list-style: none;
 
-  margin: inherit;
+  margin: 10px 0;
   padding: inherit;
-}
-
-.ingredients {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 </style>

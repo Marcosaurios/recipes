@@ -1,5 +1,5 @@
 <script context="module">
-// export async function load({ page, fetch }) {
+// export async function load({  }) {
 //   const res = await fetch(`index.json`);
 
 //   if (res.ok) {
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-import type { Recipe } from "src/_types/Recipe";
+import type { Recipe } from "../_types/Recipe";
 import RecipePreview from "$lib/atoms/recipe-preview.svelte";
 import Ingredient from "$lib/atoms/ingredient.svelte";
 
@@ -28,6 +28,8 @@ type DataResponse = {
 };
 
 export let data: DataResponse;
+
+console.log(data)
 </script>
 
 <h1>Recetario</h1>

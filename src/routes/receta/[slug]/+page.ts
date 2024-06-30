@@ -44,11 +44,13 @@
 // }
 
 import { error } from '@sveltejs/kit';
+import type { PageLoad } from './$types';
 export const prerender = true
 
  
 /** @type {import('./$types').PageLoad} */
-export function load({ params }) {
+export function load({ params }: PageLoad) {
+  console.log(params)
   if (params.slug === 'hello-world') {
     return {
       title: 'Hello world!',

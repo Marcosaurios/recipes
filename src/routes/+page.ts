@@ -5,9 +5,7 @@ export const prerender = true
 
 export function load() {
   return {
-    body: {
       recipes,
-      ingredients,
-    },
+      ingredients
   };
 }

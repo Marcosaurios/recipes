@@ -1,11 +1,13 @@
-<script context="module">
+<script lang="ts">
+	import type { PageData } from './$types';
+
     /**
      * It's the recipe page itself. Only takes data (from receta.ts) and
      * displays it as html
     */
 
     /** @type {import('./$types').PageData} */ 
-    export let data;
+    export let data: PageData;
     // export async function load({ page, fetch }) {
     //   // TODO
     //   const url = `/receta/${page.params.slug}.json`;

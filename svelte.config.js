@@ -1,34 +1,40 @@
-import preprocess from "svelte-preprocess";
-import adapter from "@sveltejs/adapter-static";
-import { readFile } from "fs/promises";
+import adapter from '@sveltejs/adapter-auto';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+// TODO investigate this
+import { readFile } from "fs/promises";
 const urls = JSON.parse(await readFile("./content/_urls.json"));
 
 /** @type {import('@sveltejs/kit').Config} */
-
-// TODO update svelte adapter static
 const config = {
-  preprocess: preprocess(),
+	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
+	// for more information about preprocessors
+	preprocess: vitePreprocess(),
 
-  kit: {
-    adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      fallback: null,
-      precompress: false,
-      strict: true
-    }),
-    // For now prerender will be disabled, as every page will be static
-    // prerender: {
-    //   crawl: true,
-    //   entries: urls,
-    // },
-    alias: {
-      "$lib": "src/lib",
-      "$lib/*": "src/lib/*",
-      "$comp/*": "src/components/*"
-    }
-  },
+	kit: {
+		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
+		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
+		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
+		adapter: adapter(),
+		// TODO investigate this
+		// adapter: adapter({
+		// 	pages: 'build',
+		// 	assets: 'build',
+		// 	fallback: null,
+		// 	precompress: false,
+		// 	strict: true
+		//   }),
+		  // For now prerender will be disabled, as every page will be static
+		  // prerender: {
+		  //   crawl: true,
+		  //   entries: urls,
+		  // },
+	},
+	alias: {
+		"$lib": "src/lib",
+		"$lib/*": "src/lib/*",
+		"$comp/*": "src/components/*"
+	}
 };
 
 export default config;

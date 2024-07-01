@@ -14,7 +14,7 @@ export default {
           updated,
         };
       
-        console.log("Fetched recipe ", recipe);
+        console.log("Fetched recipe ", recipe.title);
       
         return recipe;
     }

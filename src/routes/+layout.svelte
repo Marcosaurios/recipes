@@ -1,7 +1,7 @@
 <!-- Shared components across the website -->
-<script>
+<!-- <script>
   export const prerender = true;
-</script>
+</script> -->
 
 <nav>
   <a href="/">Logo</a>

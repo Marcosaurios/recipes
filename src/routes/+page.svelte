@@ -38,11 +38,11 @@ console.log(data)
   <input type="text" class="search" />
 </div>
 
-<div class="ingredients">
+<!-- <div class="ingredients">
   {#each data.ingredients as i}
     <Ingredient title="{i}" />
   {/each}
-</div>
+</div> -->
 
 <ul class="recipes">
   {#each data.recipes as r}

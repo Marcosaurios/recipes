@@ -9,7 +9,7 @@ const VERBOSE = !!(process.env.VITE_VERBOSE_FETCH === 'true')
 
 // Generated content
 // TODO maybe write recipes per ingredient
-const PATH_STATIC = "content";
+const PATH_STATIC = "src/static/cms";
 const PATH_ALL_RECIPES = `${PATH_STATIC}/allRecipes.json`;
 // const PATH_INGREDIENTS = `${PATH_STATIC}/_ingredients.json`;
 const PATH_URLS = `${PATH_STATIC}/allUrls.json`;
@@ -55,7 +55,7 @@ const parser = {
     return {
       ..._recipe,
       url,
-      searchableIngredients: ing,
+      // searchableIngredients: ing,
     };
   }
 }
@@ -81,7 +81,7 @@ async function preload() {
 
 
   writter.write(`${cwd()}/${PATH_ALL_RECIPES}`, recipes);
-  writter.write(`${cwd()}/${PATH_INGREDIENTS}`, ingredients);
+  // writter.write(`${cwd()}/${PATH_INGREDIENTS}`, ingredients);
   writter.write(`${cwd()}/${PATH_URLS}`, urls);
   recipes.forEach(r => writter.write(`${cwd()}/${PATH_RECIPES}/${r.slug}.json`, r));
   
@@ -89,7 +89,7 @@ async function preload() {
   // CLI feedback
   // log(`"-- Ingredients to search are: ${ingredients}`)
   // console.log(ingredientsOrder);
-  log(`-- Fetched these pages:  ${recipes}`)
+  log(`-- Fetched these pages:  ${recipes.map(r => r.url)}`)
 }
 
 const log = (payload) => VERBOSE ? console.log(payload) : 0

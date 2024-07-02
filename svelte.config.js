@@ -3,7 +3,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 // TODO investigate this
 import { readFile } from "fs/promises";
-const urls = JSON.parse(await readFile("./content/_urls.json"));
+// const urls = JSON.parse(await readFile("./content/allUrls.json"));
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

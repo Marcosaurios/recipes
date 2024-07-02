@@ -8,6 +8,8 @@
 
     /** @type {import('./$types').PageData} */ 
     export let data: PageData;
+    const { title } = data
+    console.log('page.svelte CLIENT ', data)
     // export async function load({ page, fetch }) {
     //   // TODO
     //   const url = `/receta/${page.params.slug}.json`;
@@ -31,6 +33,8 @@
     
     
     <h2>{data.title}</h2>
+    <h2>{data.body}</h2>
+    <h2>{title}</h2>
         
     <div>
     </div>

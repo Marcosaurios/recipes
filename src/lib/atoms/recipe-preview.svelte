@@ -1,15 +1,15 @@
 <script lang="ts">
-export let title: string = "";
-export let url: string = "";
+	import type { Recipe } from "../../types/Recipe"
+export let recipe: Recipe;
 </script>
 
 <div class="recipe">
-  <a href="{url}" class="recipe__link">
-    {title}
+  <a href="receta/{recipe.slug}" class="link">
+    {recipe.title}
   </a>
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .recipe {
   background-color: #6d91ba;
   border-radius: 10px;
@@ -21,7 +21,7 @@ export let url: string = "";
     background-color: #172433;
   }
 
-  .recipe__link {
+  .link {
     display: block;
     padding: 1.5rem;
     text-decoration: none;

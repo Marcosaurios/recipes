@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-import type { Recipe } from "../_types/Recipe";
+import type { Recipe } from "../types/Recipe";
 import RecipePreview from "$lib/atoms/recipe-preview.svelte";
 import Ingredient from "$lib/atoms/ingredient.svelte";
 
@@ -29,7 +29,6 @@ type DataResponse = {
 
 export let data: DataResponse;
 
-console.log(data)
 </script>
 
 <h1>Recetario</h1>
@@ -47,7 +46,7 @@ console.log(data)
 <ul class="recipes">
   {#each data.recipes as r}
     <li>
-      <RecipePreview title="{r.title}" url="{r.url}" />
+      <RecipePreview recipe="{r}" />
     </li>
   {/each}
 </ul>

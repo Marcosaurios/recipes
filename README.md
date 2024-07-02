@@ -6,3 +6,7 @@ The project follows the Functional Requirements explained in each issue labeled 
 - **Prerendering**: I was confused understanding how the static content loads in the `load` function. I thought Sveltekit will crawl this `load` functions and store each value in the static generated site. Instead, in the `svelte.config.js` options we have a useful [prerendering](https://kit.svelte.dev/docs#configuration-prerender) option with an `entries` parameter: an array of URL pages. Sveltekit will look for each URLs in our code in the compilation time, resolving each one statically.
 - **Modules importing**: When running node JS scripts and using `ES Modules` `import`s, you must provide the file extension always in the importing path. 
 
+
+TODO
+-[] Mock api 
+

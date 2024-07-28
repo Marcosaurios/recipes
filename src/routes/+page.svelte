@@ -1,67 +1,42 @@
-<script context="module">
-// export async function load({  }) {
-//   const res = await fetch(`index.json`);
-
-//   if (res.ok) {
-//     return {
-//       props: {
-//         data: await res.json(),
-//       },
-//     };
-//   }
-
-//   return {
-//     status: res.status,
-//     error: new Error(`Could not load ${"content/recipes"}`),
-//   };
-// }
-</script>
-
 <script lang="ts">
-import type { Recipe } from "../types/Recipe";
-import RecipePreview from "$lib/atoms/recipe-preview.svelte";
-import Ingredient from "$lib/atoms/ingredient.svelte";
+	import type { Recipe } from '../types/Recipe';
+	import RecipePreview from '$lib/atoms/recipe-preview.svelte';
+	import Ingredient from '$lib/atoms/ingredient.svelte';
+	import Searchbox from '$lib/atoms/searchbox.svelte';
 
-type DataResponse = {
-  recipes: Array<Recipe>;
-  ingredients: Array<String>;
-};
+	type DataResponse = {
+		recipes: Array<Recipe>;
+		ingredients: Array<String>;
+	};
 
-export let data: DataResponse;
+	export let data: DataResponse;
 
+	let searchTerm: string = '';
 </script>
 
 <h1>Recetario</h1>
 
-<div>
-  <input type="text" class="search" />
-</div>
-
-<!-- <div class="ingredients">
-  {#each data.ingredients as i}
-    <Ingredient title="{i}" />
-  {/each}
-</div> -->
+<Searchbox bind:value={searchTerm} placeholder="Buscar una receta o ingrediente" />
 
 <ul class="recipes">
-  {#each data.recipes as r}
-    <li>
-      <RecipePreview recipe="{r}" />
-    </li>
-  {/each}
+	{#each data.recipes as r, index}
+		<li>
+			<RecipePreview recipe={r} type={index === 0 ? 'large' : 'standard'} />
+		</li>
+	{/each}
 </ul>
 
 <style lang="scss" scoped>
-ul {
-  list-style: none;
+	ul {
+		list-style: none;
 
-  margin: inherit;
-  padding: inherit;
-}
+		margin: inherit;
+		padding: inherit;
+	}
 
-.ingredients {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+	.ingredients {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 </style>

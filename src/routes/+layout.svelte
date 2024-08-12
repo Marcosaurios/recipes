@@ -1,3 +1,17 @@
+<script lang="ts">
+	import { browser } from '$app/environment';
+	import '$lib/i18n'; // Import to initialize. Important :)
+	import { locale, waitLocale } from 'svelte-i18n';
+	import type { LayoutData } from './$types';
+
+	export const load: LayoutData = async () => {
+		if (browser) {
+			locale.set(window.navigator.language);
+		}
+		await waitLocale();
+	};
+</script>
+
 <nav>
 	<a href="/">Logo</a>
 </nav>
@@ -5,33 +19,11 @@
 <slot />
 
 <style lang="scss">
-	@import './variables.scss';
-	:global(html) {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-			'Open Sans', 'Helvetica Neue', sans-serif;
-		background-color: $darkColor;
-	}
+	@import '../lib/globals/styles.scss';
 
-	/* unvisited link */
-	:global(a:link) {
-		color: #172433;
-	}
-
-	/* visited link */
-	:global(a:visited) {
-		color: #243951;
-	}
-
-	/* mouse over link */
-	:global(a:hover) {
-		color: hotpink;
-	}
-
-	/* selected link */
-	:global(a:active) {
-		color: blue;
-	}
-	body {
-		background-color: #b6cfea;
+	@include desktopView {
+		:global(body) {
+			background-color: red;
+		}
 	}
 </style>

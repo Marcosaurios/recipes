@@ -1,12 +1,23 @@
 <script lang="ts">
-	import type { Recipe } from '../../types/Recipe';
+	import { _ } from 'svelte-i18n';
+	import type { Recipe } from '../../../types/index';
 	export let recipe: Recipe;
+	export let type: string;
+
+	let name = recipe.title;
 </script>
 
 <div class="recipe">
 	<a href="receta/{recipe.slug}" class="link">
-		{recipe.title}
-	</a>
+		<span
+			>{recipe.title}
+			<img
+				class="previewImg"
+				src={recipe.imageMain}
+				alt={$_('imageAlt', { values: { name: 'namer' } })}
+			/>
+		</span></a
+	>
 </div>
 
 <style lang="scss" scoped>
@@ -21,7 +32,7 @@
 			background-color: #172433;
 		}
 
-		.link {
+		a.link {
 			display: block;
 			padding: 1.5rem;
 			text-decoration: none;

@@ -1,12 +1,10 @@
 <script lang="ts">
-	import type { Recipe } from '../types/Recipe';
-	import RecipePreview from '$lib/atoms/recipe-preview.svelte';
-	import Ingredient from '$lib/atoms/ingredient.svelte';
+	import type { Recipe } from '../../types/index';
+	import RecipePreview from '$lib/atoms/recipePreview.svelte';
 	import Searchbox from '$lib/atoms/searchbox.svelte';
 
 	type DataResponse = {
 		recipes: Array<Recipe>;
-		ingredients: Array<String>;
 	};
 
 	export let data: DataResponse;

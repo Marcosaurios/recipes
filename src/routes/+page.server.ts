@@ -1,9 +1,7 @@
-import { getAllRecipes } from "$lib/server/api"
-
-export const prerender = true
+import { ALL_RECIPES } from "$lib/globals/defines";
 
 export async function load() {
   return {
-    recipes: await getAllRecipes()
+    recipes: ALL_RECIPES
   };
 }

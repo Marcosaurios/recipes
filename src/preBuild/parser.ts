@@ -29,10 +29,6 @@ export const parser: Parser = {
 // Formatter to convert a Receta from the CMS to a Recipe 
 function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
   const { updatedAt, createdAt } = r.sys;
-  console.log(r.sys);
-  console.log(r.sys.space.sys);
-  console.log(r.sys.contentType.sys);
-  console.log(r.sys.environment.sys);
 
   let images: string[] = []
   if (Array.isArray(r.fields.images)) {

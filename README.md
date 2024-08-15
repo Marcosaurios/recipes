@@ -53,6 +53,9 @@ To avoid that, you can make use of your own definition files. In this case, I cr
   
 - **Modules importing**: When running node JS scripts and using `ES Modules` `import`s, you must provide the file extension always in the importing path. 
 
+### CSS
+- `display: contents` &rarr; element's children to appear as if they were direct children of the element's parent, ignoring the element itself. Useful to ignore the DOM structure and apply the stylings to its childrens and its recursive children. References: [SO](https://stackoverflow.com/a/78224467/8703494)
+
 ### Svelte kit
 - **Prerendering**: I was confused understanding how the static content loads in the `load` function. I thought Sveltekit will crawl this `load` functions and store each value in the static generated site. Instead, in the `svelte.config.js` options we have a useful [prerendering](https://kit.svelte.dev/docs#configuration-prerender) option with an `entries` parameter: an array of URL pages. Sveltekit will look for each URLs in our code in the compilation time, resolving each one statically.
 

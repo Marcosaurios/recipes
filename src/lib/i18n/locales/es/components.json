@@ -1,0 +1,8 @@
+{
+  "common": {
+    "altText": "Imagen describiendo {name}"
+  },
+  "searchbox": {
+    "placeholder": "Buscas alguna receta?"
+  }
+}

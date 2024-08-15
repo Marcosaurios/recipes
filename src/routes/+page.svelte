@@ -1,40 +1,18 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
+
 	import type { Recipe } from '../../types/index';
-	import RecipePreview from '$lib/atoms/recipePreview.svelte';
-	import Searchbox from '$lib/atoms/searchbox.svelte';
+	import LandingPage from '$lib/components/templates/LandingPage.svelte';
 
 	type DataResponse = {
 		recipes: Array<Recipe>;
 	};
-
 	export let data: DataResponse;
-
-	let searchTerm: string = '';
 </script>
 
-<h1>Recetario</h1>
+<h1>{$t('views.landing.title')}</h1>
 
-<Searchbox bind:value={searchTerm} placeholder="Buscar una receta o ingrediente" />
-
-<ul class="recipes">
-	{#each data.recipes as r, index}
-		<li>
-			<RecipePreview recipe={r} type={index === 0 ? 'large' : 'standard'} />
-		</li>
-	{/each}
-</ul>
+<LandingPage recipes={data.recipes}></LandingPage>
 
 <style lang="scss" scoped>
-	ul {
-		list-style: none;
-
-		margin: inherit;
-		padding: inherit;
-	}
-
-	.ingredients {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
 </style>

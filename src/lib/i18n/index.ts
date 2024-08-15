@@ -1,11 +1,23 @@
-import { browser } from '$app/environment'
-import { init, register } from 'svelte-i18n'
+import i18n from 'sveltekit-i18n';
+import type { Config } from 'sveltekit-i18n'
 
-const fallbackLocale = 'es'
-register(fallbackLocale, () => import('./locales/es.json'))
+const config: Config = ({
+  loaders: [
+    {
+      locale: 'es',
+      key: 'views',
+      loader: async () => (
+        await import('./locales/es/views.json')
+      ).default,
+    },
+    {
+      locale: 'es',
+      key: 'components',
+      loader: async () => (
+        await import('./locales/es/components.json')
+      ).default,
+    }
+  ],
+});
 
-init({
-  fallbackLocale,
-  // Not implemented in other langs yet
-  initialLocale: browser ? window.navigator.language : fallbackLocale,
-})
+export const { t, locale, locales, loading, loadTranslations } = new i18n(config);

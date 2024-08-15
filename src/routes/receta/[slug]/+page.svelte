@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { parseMd } from '$lib/components/atoms/markdown';
 	import type { PageData } from './$types';
 
 	/**
@@ -6,11 +7,10 @@
 	 * displays it as html
 	 */
 
-	/** @type {import('./$types').PageData} */
 	export let data: PageData;
 </script>
 
 <h2>{data.title}</h2>
-<h2>{data.description}</h2>
+<h2>{@html parseMd(data.description)}</h2>
 
 <div></div>

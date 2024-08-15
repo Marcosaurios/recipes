@@ -1,5 +1,5 @@
 import snarkdown from "snarkdown";
 
-export function parser(content: string) {
+export function parseMd(content: string) {
   return snarkdown(content);
 }

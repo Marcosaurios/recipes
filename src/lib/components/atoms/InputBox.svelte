@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 
 	export let value: string;
-	export let placeholder: string = $t('components.searchbox.placeholder');
+	export let placeholder: string = $t('components.inputBox.placeholder');
 
 	let inputEl: HTMLInputElement;
 
@@ -19,6 +19,7 @@
 </div>
 
 <style lang="scss">
+	@import '$lib/globals/styles.scss';
 	@import '$lib/globals/variables.scss';
 
 	.Searchbox {
@@ -27,6 +28,9 @@
 		// Both should share the exact same shape
 		input,
 		.placeholder {
+			font-family: $font;
+			font-style: italic;
+
 			width: 100%;
 			height: 2rem;
 			padding: 0;
@@ -76,7 +80,7 @@
 			top: 0;
 			left: 0;
 			color: $fontColor;
-			filter: brightness(0.6);
+			@include darken;
 		}
 	}
 </style>

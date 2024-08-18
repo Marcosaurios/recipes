@@ -54,7 +54,15 @@ To avoid that, you can make use of your own definition files. In this case, I cr
 - **Modules importing**: When running node JS scripts and using `ES Modules` `import`s, you must provide the file extension always in the importing path. 
 
 ### CSS
-- `display: contents` &rarr; element's children to appear as if they were direct children of the element's parent, ignoring the element itself. Useful to ignore the DOM structure and apply the stylings to its childrens and its recursive children. References: [SO](https://stackoverflow.com/a/78224467/8703494)
+#### Atomic Design Principles
+Organizing your code structure is important to guarantee consistency across your changes. Not only for your own _inner peace of mind_ of keeping things _where you believe_, but also to give some solid meaning to your codebase. One of the most known techniques is the Atomic principle, where you organise your code following the next schema:
+- Atoms: smallest unit of meaning. Your own definition of how an "input" element should look like.
+- Molecules: components that need 2 atoms or more to work together. More complex structures fit here: a searchbox, having an input and a buton, for example. I broke a bit this rule, to also place components here that are complex and aren't built _only_ of atoms, but weren't small enough to fit into the atoms category.
+- Organisms: can combine multiple molecules, and also atoms. It's easy to confuse between Molecule and Organism, but I just follow the simple rule: For a component to be an organism, needs to have a molecule and an atom.
+- Templates: these are whole blocks of views that will fit into the webappm, composed of any of the previous categories. Will include mostly organisms, but not limited to these.
+
+#### Some rules unkown to me
+- `display: contents` &rarr; element's children to appear as if they were direct children of the element's parent, ignoring the element surrounding DOM. Useful to ignore the DOM structure and apply the stylings to its childrens and its recursive children. References: [SO](https://stackoverflow.com/a/78224467/8703494)
 
 ### Svelte kit
 - **Prerendering**: I was confused understanding how the static content loads in the `load` function. I thought Sveltekit will crawl this `load` functions and store each value in the static generated site. Instead, in the `svelte.config.js` options we have a useful [prerendering](https://kit.svelte.dev/docs#configuration-prerender) option with an `entries` parameter: an array of URL pages. Sveltekit will look for each URLs in our code in the compilation time, resolving each one statically.

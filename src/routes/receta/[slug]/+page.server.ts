@@ -1,4 +1,5 @@
 import type { PageServerLoad } from "./$types";
+import { ALL_RECIPES_BY_SLUG } from "$lib/globals/defines";
 
 /**
  * Runs in the server. It's the way to fetch each recipe in this case.
@@ -6,5 +7,5 @@ import type { PageServerLoad } from "./$types";
 
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = async ({ params }) => {
-  return __ALL_FETCHED_RECIPES_BY_SLUG__[params.slug]
+  return ALL_RECIPES_BY_SLUG[params.slug]
 }

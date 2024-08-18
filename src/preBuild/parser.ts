@@ -1,5 +1,5 @@
 import type { Entry } from "contentful";
-import type { ImageCMS, Recipe, TypeRecetaSkeleton } from "../../types/index";
+import type { ImageCMS, Recipe, TypeRecetaSkeleton } from "$types";
 
 export type Parser = {
   byCategories: Record<string, Recipe[]>,
@@ -32,12 +32,12 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
 
   let images: string[] = []
   if (Array.isArray(r.fields.images)) {
-    images = (r.fields.images as ImageCMS[]).map((i) => i.original_secure_url)
+    images = (r.fields.images as ImageCMS[]).map(extractCloudinaryImageURL)
   }
 
   let imageMain: string = ''
   if (Array.isArray(r.fields.imageMain)) {
-    imageMain = (r.fields.imageMain as ImageCMS[])[0].original_secure_url
+    imageMain = extractCloudinaryImageURL((r.fields.imageMain as ImageCMS[])[0])
   }
 
   return {
@@ -48,5 +48,7 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
     updatedAt,
   }
 }
+
+const extractCloudinaryImageURL = (img: ImageCMS): string => img.original_secure_url
 
 export default parser

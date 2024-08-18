@@ -6,6 +6,11 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
+		// vite: {
+		// 	optimizeDeps: {
+		// 		include: ['lodash.get', 'lodash.isequal', 'lodash.clonedeep']
+		// 	},
+		// },
 		// adapter: adapter({
 		// 	pages: 'build',
 		// 	assets: 'build',
@@ -18,10 +23,9 @@ const config = {
 		//   crawl: true,
 		//   entries: urls,
 		// },
-	},
-	alias: {
-		"$lib": "src/lib",
-		"$lib/*": "src/lib/*"
+		alias: {
+			$types: "src/types"
+		},
 	},
 };
 

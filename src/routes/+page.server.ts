@@ -1,7 +1,5 @@
-import { ALL_RECIPES } from "$lib/globals/defines";
+import { ALL_RECIPES as recipes } from "$lib/globals/defines";
 
 export async function load() {
-  return {
-    recipes: ALL_RECIPES
-  };
+  return { recipes }
 }

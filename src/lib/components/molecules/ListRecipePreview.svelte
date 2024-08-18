@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Recipe } from '../../../../types';
+	import type { Recipe } from '$types';
 	import RecipePreview from './RecipePreview.svelte';
 
 	export let items: Recipe[];
@@ -23,5 +23,10 @@
 
 	li {
 		list-style: none;
+		margin: 1rem 0;
+	}
+
+	li:last-child {
+		margin-bottom: 0;
 	}
 </style>

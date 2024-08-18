@@ -5,9 +5,9 @@ const config: Config = ({
   loaders: [
     {
       locale: 'es',
-      key: 'views',
+      key: 'templates',
       loader: async () => (
-        await import('./locales/es/views.json')
+        await import('./locales/es/templates.json')
       ).default,
     },
     {

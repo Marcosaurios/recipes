@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Entry, EntryFields } from 'contentful'
 
 import parser from '../parser'
-import type { TypeRecetaSkeleton } from '../../../types'
+import type { TypeRecetaSkeleton } from '$types'
 
 describe('CMS parser', () => {
   it('Should load a single recipe successfully', () => {

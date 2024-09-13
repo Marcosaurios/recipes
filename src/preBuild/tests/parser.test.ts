@@ -3,18 +3,20 @@ import type { Entry, EntryFields } from 'contentful'
 
 import parser from '../parser'
 import type { TypeRecetaSkeleton } from '$types'
+import { url } from 'inspector'
 
 describe('CMS parser', () => {
   it('Should load a single recipe successfully', () => {
     const cmsRecipe = MakeRecipeHelper('one title', 'first-entry', ["starter"])
 
-    parser.recipe(cmsRecipe)
+    parser.process([cmsRecipe])
 
     expect(parser.recipes[0]).toMatchObject({
       title: 'one title',
       ingredients: ['potatoes'],
       description: 'A description',
       slug: 'first-entry',
+      url: 'receta/first-entry',
       minutes: 5,
       difficulty: 10,
       category: ['starter'],
@@ -26,14 +28,16 @@ describe('CMS parser', () => {
   it('Should load categories with their recipes successfully', () => {
     const r: Entry<TypeRecetaSkeleton, undefined, string>[] = [
       MakeRecipeHelper("one title", "first-entry", ["starter"]),
-      MakeRecipeHelper("2nd title", "2nd-entry", ["starter"])
+      MakeRecipeHelper("2nd title", "2nd-entry", ["starter"]),
+      MakeRecipeHelper("2nd title", "2nd-entry", ["finisher"])
     ]
 
-    r.forEach(parser.recipe)
+    parser.process(r)
 
     expect(parser.byCategories).toHaveProperty('starter')
     expect(parser.bySlug).toHaveProperty('first-entry')
     expect(parser.bySlug).toHaveProperty('2nd-entry')
+    expect(parser.categories).toEqual([{ name: 'starter', url: 'categoria/starter' }, { name: 'finisher', url: 'categoria/finisher' }])
   })
 })
 

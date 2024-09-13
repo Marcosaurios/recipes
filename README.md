@@ -6,6 +6,10 @@ Stakeholders: My dad
 
 Developers: me
 
+## Development
+- `npm run dev` to run it locally
+- `npm run cf-export-types` to sync the types used in the application with the types used in the CMS, if something has changed.
+
 ## Things I've learnt
 ### Typescript and `d.ts` definitions
 To have all the content I needed inside the webapp, I wanted to pass it through a _[global constant replacement](https://vitejs.dev/config/shared-options.html#define)_ (using `define` config in `vite.config.ts`), because it's a content that won't change along the webapp runtime. In short, this replacement happens at build/compilation time, meaning that until that stage happens, the _constant_ remains of type `unknown`, and intellisense won't guess the type.

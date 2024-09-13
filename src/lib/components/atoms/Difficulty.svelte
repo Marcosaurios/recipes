@@ -4,10 +4,10 @@
 
 	export let filled;
 	export let total = 5;
-	const items = new Array(total);
+	const stars = new Array(total);
 </script>
 
-{#each items as _, i}
+{#each stars as _, i}
 	{#if i < filled}
 		<SolidStar></SolidStar>
 	{:else}

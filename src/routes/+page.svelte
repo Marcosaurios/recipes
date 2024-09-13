@@ -2,13 +2,13 @@
 	import type { Recipe } from '$types';
 	import LandingPage from '$lib/components/templates/LandingPage.svelte';
 
-	type DataResponse = {
+	export let data: {
 		recipes: Array<Recipe>;
+		categories: Array<string>;
 	};
-	export let data: DataResponse;
 </script>
 
-<LandingPage recipes={data.recipes}></LandingPage>
+<LandingPage recipes={data.recipes} categories={data.categories} />
 
 <style lang="scss" scoped>
 </style>

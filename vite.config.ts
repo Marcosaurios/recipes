@@ -5,15 +5,17 @@ import Icons from 'unplugin-icons/vite'
 import { getAllRecipes } from './src/preBuild/fetch';
 
 export default defineConfig(async () => {
-	const content = await getAllRecipes()
+	const cms = await getAllRecipes()
+	console.log(cms);
 	return {
 		plugins: [
 			sveltekit(),
 			Icons({ compiler: 'svelte' })
 		],
 		define: {
-			__ALL_FETCHED_RECIPES__: content?.recipes,
-			__ALL_FETCHED_RECIPES_BY_SLUG__: content?.bySlug
+			__ALL_RECIPES__: cms?.recipes,
+			__RECIPE_BY_SLUG__: cms?.bySlug,
+			__RECIPES_BY_CATEGORY__: cms?.byCategories
 		}
 	}
 });

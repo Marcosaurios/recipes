@@ -12,7 +12,9 @@ export type Recipe = {
   minutes?: number,
   difficulty?: number,
   updatedAt: string,
-  createdAt: string
+  createdAt: string,
+  // "virtual" props
+  url: string
 }
 
 /**

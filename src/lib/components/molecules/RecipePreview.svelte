@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
 	import type { Recipe } from '$types';
 	import { formatDuration } from '$lib/components/utils';
 	import Clock from '~icons/fa-solid/clock';
@@ -12,7 +11,7 @@
 
 <div class="RecipePreview">
 	<a
-		href="receta/{recipe.slug}"
+		href={recipe.url}
 		class="link"
 		class:expanded
 		style:background-image={`url("${recipe.imageMain}")`}

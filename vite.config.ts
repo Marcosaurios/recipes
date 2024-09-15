@@ -6,7 +6,6 @@ import { getAllRecipes } from './src/preBuild/fetch';
 
 export default defineConfig(async () => {
 	const cms = await getAllRecipes()
-	console.log(cms);
 	return {
 		plugins: [
 			sveltekit(),
@@ -15,7 +14,8 @@ export default defineConfig(async () => {
 		define: {
 			__ALL_RECIPES__: cms?.recipes,
 			__RECIPE_BY_SLUG__: cms?.bySlug,
-			__RECIPES_BY_CATEGORY__: cms?.byCategories
+			__RECIPES_BY_CATEGORY__: cms?.byCategories,
+			__CATEGORIES__: cms?.categories
 		}
 	}
 });

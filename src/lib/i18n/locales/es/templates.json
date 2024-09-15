@@ -1,7 +1,8 @@
 {
   "landing": {
     "title": "El legado santanero",
-    "lastRecipe": "Últimas recetas añadidas"
+    "lastRecipe": "Últimas recetas añadidas",
+    "categories": "Categorías"
   },
   "imageAlt": "Imagen previa de {name}"
 }

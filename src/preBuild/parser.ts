@@ -1,5 +1,5 @@
 import type { Entry } from "contentful";
-import type { ImageCMS, Recipe, TypeRecetaSkeleton } from "$types";
+import type { ImageCMS, Recipe, TypeRecetaSkeleton, Category } from "$types";
 
 export type Parser = {
   process: (_i: Entry<TypeRecetaSkeleton, undefined, string>[]) => void,
@@ -7,7 +7,7 @@ export type Parser = {
   byCategories: Record<string, Recipe[]>,
   bySlug: Record<string, Recipe>,
   recipes: Recipe[],
-  categories: { name: string, url: string }[],
+  categories: Category[],
 
   recipe: (_r: Entry<TypeRecetaSkeleton, undefined, string>) => void
 }
@@ -24,7 +24,7 @@ export const parser: Parser = {
 
     parser.recipes.sort(sortByCreatedAt)
     parser.categories = Object.keys(parser.byCategories)
-      .map(c => ({ name: c, url: linkBuilder.category(c) }))
+      .map(c => ({ name: c, url: linkBuilderFor.category(c) }))
   },
   recipe: (r) => {
     const parsed = parseRecipe(r)
@@ -41,7 +41,7 @@ export const parser: Parser = {
 }
 
 // Generates the links used by this app
-const linkBuilder = {
+const linkBuilderFor = {
   recipe: (slug: string) => `receta/${slug}`,
   category: (categoryName: string) => `categoria/${categoryName}`
 }
@@ -64,7 +64,7 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
 
   return {
     ...r.fields,
-    url: linkBuilder.recipe(r.fields.slug),
+    url: linkBuilderFor.recipe(r.fields.slug),
     images,
     imageMain,
     createdAt,

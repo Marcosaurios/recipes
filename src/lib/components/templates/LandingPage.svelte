@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 
-	import type { Recipe } from '$types';
-	import { Slideshow, ItemsGrid } from '../atoms';
+	import type { Recipe, Category as TCategory } from '$types';
+	import { Slideshow, Category } from '../atoms';
 	import { RecipePreview } from '../molecules';
 	import SearchList from '../organisms/SearchList.svelte';
 
 	export let recipes: Recipe[];
-	export let categories: string[];
+	export let categories: TCategory[];
 
 	let slideshowItems = recipes.slice(0, 1);
 </script>
@@ -22,12 +22,16 @@
 		</Slideshow>
 
 		<p>{$t('templates.landing.categories')}</p>
-		<ItemsGrid items={categories} />
+		{#each categories as category}
+			<Category {category} />
+		{/each}
 	</svelte:fragment>
 </SearchList>
 
 <style lang="scss">
+	@import '$lib/globals/variables.scss';
+	@import '$lib/globals/styles.scss';
 	p {
-		// text-align: center;
+		@include darken;
 	}
 </style>

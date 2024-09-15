@@ -17,6 +17,11 @@ export type Recipe = {
   url: string
 }
 
+export type Category = {
+  name: string,
+  url: string
+}
+
 /**
  * Cloudinary image type returned by the CMS
  * We only grab `original_secure_url` value as src

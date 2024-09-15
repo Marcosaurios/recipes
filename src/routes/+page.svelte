@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Recipe } from '$types';
+	import type { Category, Recipe } from '$types';
 	import LandingPage from '$lib/components/templates/LandingPage.svelte';
 
 	export let data: {
 		recipes: Array<Recipe>;
-		categories: Array<string>;
+		categories: Array<Category>;
 	};
 </script>
 

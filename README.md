@@ -8,7 +8,7 @@ Developers: me
 
 ## Development
 - `npm run dev` to run it locally
-- `npm run cf-export-types` to sync the types used in the application with the types used in the CMS, if something has changed.
+- `npm run cf-export-types` to sync the types used in the application with the types used in the CMS, if something has changed in the CMS-side.
 
 ## Things I've learnt
 ### Typescript and `d.ts` definitions

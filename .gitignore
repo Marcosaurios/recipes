@@ -1,15 +1,24 @@
-# Logs
-logs
-*.log
-npm-debug.log*
+node_modules
 
-# Dependency directories
-node_modules/
-jspm_packages/
+# Output
+.output
+.vercel
+/.svelte-kit
+/build
 
-# dotenv environment variables file
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
 .env
-.env.test
+.env.*
+!.env.example
+!.env.test
 
-# Svelte
-.svelte-kit
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+#IDE
+.vscode

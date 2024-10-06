@@ -1,0 +1,60 @@
+@import "./variables";
+
+// Font 'Lora' loading
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+// Media queries
+@mixin desktopView() {
+  @media screen and (min-width: $breakpoint-tablet) {
+    @content();
+  }
+}
+
+// Global font size. Other elements should use `rem`.
+:global(html) {
+  font-family: $font;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+
+  letter-spacing: -0.054px;
+  line-height: 20px;
+
+  color: $fontColor;
+  background-color: $bgColor;
+
+  @include desktopView() {
+    font-size: 20px;
+    letter-spacing: -0.06px;
+    line-height: 32px;
+  }
+}
+
+/* unvisited link */
+:global(a:link) {
+  color: #172433;
+}
+
+/* visited link */
+:global(a:visited) {
+  color: #243951;
+}
+
+/* mouse over link */
+:global(a:hover) {
+  color: hotpink;
+}
+
+/* selected link */
+:global(a:active) {
+  color: blue;
+}
+
+@mixin darken {
+  filter: brightness(0.6);
+}
+
+@mixin undarken {
+  filter: brightness(1);
+}

@@ -1,0 +1,15 @@
+{
+  "common": {
+    "altText": "Imagen describiendo {name}"
+  },
+  "inputBox": {
+    "placeholder": "¿Buscas alguna receta?"
+  },
+  "searchList": {
+    "noResults": "No hay recetas con ese título"
+  },
+  "recipe": {
+    "ingredients": "Ingredientes",
+    "description": "Elaboración"
+  }
+}

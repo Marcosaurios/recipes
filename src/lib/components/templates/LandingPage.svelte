@@ -9,7 +9,7 @@
 	export let recipes: Recipe[];
 	export let categories: TCategory[];
 
-	let slideshowItems = recipes.slice(0, 1);
+	let slideshowItems = recipes.slice(0, 3);
 </script>
 
 <SearchList {recipes}>
@@ -22,9 +22,12 @@
 		</Slideshow>
 
 		<p>{$t('templates.landing.categories')}</p>
-		{#each categories as category}
-			<Category {category} />
-		{/each}
+
+		<div class="categories">
+			{#each categories as category}
+				<Category {category} />
+			{/each}
+		</div>
 	</svelte:fragment>
 </SearchList>
 
@@ -33,5 +36,10 @@
 	@import '$lib/globals/styles.scss';
 	p {
 		@include darken;
+	}
+
+	.categories {
+		display: flex;
+		gap: 10px;
 	}
 </style>

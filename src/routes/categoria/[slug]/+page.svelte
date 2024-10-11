@@ -5,4 +5,4 @@
 	export let data: PageData;
 </script>
 
-<CategoryPage items={data.recipes} />
+<CategoryPage items={data.recipes} category={data.category}/>

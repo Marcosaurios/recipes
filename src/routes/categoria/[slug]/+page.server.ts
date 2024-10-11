@@ -3,8 +3,9 @@ import type { PageServerLoad } from "./$types";
 import type { Recipe } from "$types";
 
 /** @type {import('./$types').PageServerLoad} */
-export const load: PageServerLoad<{ recipes: Recipe[] }> = async ({ params }) => {
+export const load: PageServerLoad<{ recipes: Recipe[], category: string }> = async ({ params }) => {
   return {
-    recipes: RECIPES_BY_CATEGORY[params.slug]
+    recipes: RECIPES_BY_CATEGORY[params.slug],
+    category: params.slug
   }
 }

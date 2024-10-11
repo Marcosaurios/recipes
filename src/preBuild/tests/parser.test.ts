@@ -16,7 +16,7 @@ describe('CMS parser', () => {
       ingredients: ['potatoes'],
       description: 'A description',
       slug: 'first-entry',
-      url: 'receta/first-entry',
+      url: '/receta/first-entry',
       minutes: 5,
       difficulty: 10,
       category: ['starter'],
@@ -37,7 +37,7 @@ describe('CMS parser', () => {
     expect(parser.byCategories).toHaveProperty('starter')
     expect(parser.bySlug).toHaveProperty('first-entry')
     expect(parser.bySlug).toHaveProperty('2nd-entry')
-    expect(parser.categories).toEqual([{ name: 'starter', url: 'categoria/starter' }, { name: 'finisher', url: 'categoria/finisher' }])
+    expect(parser.categories).toEqual([{ name: 'starter', url: '/categoria/starter' }, { name: 'finisher', url: '/categoria/finisher' }])
   })
 })
 

@@ -42,8 +42,8 @@ export const parser: Parser = {
 
 // Generates the links used by this app
 const linkBuilderFor = {
-  recipe: (slug: string) => `receta/${slug}`,
-  category: (categoryName: string) => `categoria/${categoryName}`
+  recipe: (slug: string) => `/receta/${slug}`,
+  category: (categoryName: string) => `/categoria/${categoryName}`
 }
 
 

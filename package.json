@@ -34,7 +34,7 @@
 		"marked": "^14.0.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
-		"sass": "^1.77.6",
+		"sass": "^1.79.5",
 		"svelte": "^4.2.18",
 		"svelte-carousel": "^1.0.25",
 		"svelte-check": "^3.8.5",

@@ -27,7 +27,7 @@
 		"dotenv": "^16.4.5",
 		"eslint": "^9.9.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.43.0",
+		"eslint-plugin-svelte": "^2.46.0",
 		"fs-extra": "^11.2.0",
 		"globals": "^15.0.0",
 		"ingrediente-parser": "^1.0.2",

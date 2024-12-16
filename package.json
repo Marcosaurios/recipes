@@ -22,7 +22,7 @@
 		"@types/eslint": "^9.6.0",
 		"@types/node": "^22.10.1",
 		"cf-content-types-generator": "^2.15.5",
-		"cloudinary": "^2.4.0",
+		"cloudinary": "^2.5.1",
 		"contentful": "^10.12.4",
 		"dotenv": "^16.4.5",
 		"eslint": "^9.9.0",

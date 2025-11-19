@@ -3,10 +3,14 @@
 	import { formatDuration } from '$lib/components/utils';
 	import Clock from '~icons/fa-solid/clock';
 
-	export let type: 'small' | 'expanded' = 'small';
-	export let recipe: Recipe;
+	interface Props {
+		type?: 'small' | 'expanded';
+		recipe: Recipe;
+	}
 
-	$: expanded = type === 'expanded';
+	let { type = 'small', recipe }: Props = $props();
+
+	let expanded = $derived(type === 'expanded');
 </script>
 
 <div class="RecipePreview">

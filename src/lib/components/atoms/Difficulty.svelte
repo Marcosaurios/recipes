@@ -2,8 +2,12 @@
 	import SolidStar from '~icons/fa-solid/star';
 	import OutlineStar from '~icons/fa-regular/star';
 
-	export let filled;
-	export let total = 5;
+	interface Props {
+		filled: number;
+		total?: number;
+	}
+
+	let { filled, total = 5 }: Props = $props();
 	const stars = new Array(total);
 </script>
 

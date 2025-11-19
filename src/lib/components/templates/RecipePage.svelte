@@ -2,7 +2,11 @@
 	import type { Recipe } from '$types';
 	import RecipeView from '../molecules/Recipe.svelte';
 
-	export let recipe: Recipe;
+	interface Props {
+		recipe: Recipe;
+	}
+
+	let { recipe }: Props = $props();
 </script>
 
 <RecipeView {recipe} />

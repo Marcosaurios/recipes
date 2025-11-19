@@ -1,5 +1,10 @@
-<script>
+<script lang="ts">
 	import { t } from '$lib/i18n';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <nav>
@@ -8,7 +13,7 @@
 </nav>
 
 <div>
-	<slot />
+	{@render children?.()}
 </div>
 
 <style lang="scss">

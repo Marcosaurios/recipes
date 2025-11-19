@@ -3,8 +3,12 @@
 	import type { Recipe } from '$types';
 	import { ListRecipePreview } from '../molecules';
 
-	export let items: Recipe[];
-	export let category: string;
+	interface Props {
+		items: Recipe[];
+		category: string;
+	}
+
+	let { items, category }: Props = $props();
 </script>
 
 <h2>{[$t('templates.category.title'), category].join(' ')}</h2>

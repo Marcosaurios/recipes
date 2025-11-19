@@ -2,19 +2,25 @@
 	import { t } from '$lib/i18n';
 	import { onMount } from 'svelte';
 
-	export let value: string;
-	export let placeholder: string = $t('components.inputBox.placeholder');
+	interface Props {
+		value: string;
+		placeholder?: string;
+	}
 
-	let inputEl: HTMLInputElement;
+	let { value = $bindable(), placeholder = $t('components.inputBox.placeholder') }: Props =
+		$props();
+
+	let inputEl: HTMLInputElement = $state();
 
 	onMount(() => (inputEl.value = value));
 </script>
 
 <div class="Searchbox">
-	<input type="text" on:input={() => (value = inputEl.value)} bind:this={inputEl} />
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<input type="text" bind:this={inputEl} oninput={() => (value = inputEl.value)} />
 	{#if !value}
-		<label class="placeholder">{placeholder}</label>
+		<span class="placeholder">
+			{placeholder}
+		</span>
 	{/if}
 </div>
 

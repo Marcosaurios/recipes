@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Category } from '$types';
 
-	export let category: Category;
+	interface Props {
+		category: Category;
+	}
+
+	let { category }: Props = $props();
 </script>
 
 <a href={category.url} class="item">

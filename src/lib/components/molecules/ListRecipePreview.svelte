@@ -2,7 +2,11 @@
 	import type { Recipe } from '$types';
 	import RecipePreview from './RecipePreview.svelte';
 
-	export let items: Recipe[];
+	interface Props {
+		items: Recipe[];
+	}
+
+	let { items }: Props = $props();
 </script>
 
 <ul class="recipes">

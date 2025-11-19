@@ -4,17 +4,25 @@
 	import InputBox from '../atoms/InputBox.svelte';
 	import ListRecipePreview from '../molecules/ListRecipePreview.svelte';
 
-	export let recipes: Recipe[] = [];
+	interface Props {
+		recipes?: Recipe[];
+		emptyState?: import('svelte').Snippet;
+		noResultsState?: import('svelte').Snippet;
+	}
 
-	let searchTerm: string = '';
-	let searchResults: Recipe[] = [];
+	let { recipes = [], emptyState, noResultsState }: Props = $props();
 
-	$: hasSearchterm = searchTerm !== '';
+	let searchTerm: string = $state('');
+	let searchResults: Recipe[] = $state([]);
 
-	$: searchResults = hasSearchterm
-		? recipes.filter((r) => r.title.toLowerCase().includes(searchTerm.toLowerCase()))
-		: recipes;
-	$: hasResults = searchResults.length > 0;
+	let hasSearchterm = $derived(searchTerm !== '');
+
+	$effect(() => {
+		searchResults = hasSearchterm
+			? recipes.filter((r) => r.title.toLowerCase().includes(searchTerm.toLowerCase()))
+			: recipes;
+	});
+	let hasResults = $derived(searchResults.length > 0);
 </script>
 
 <div class="content">
@@ -22,15 +30,13 @@
 </div>
 
 {#if !hasSearchterm}
-	<slot name="emptyState">
+	{#if emptyState}{@render emptyState()}{:else}
 		<p>This is the empty state</p>
-	</slot>
+	{/if}
 {:else if hasResults}
 	<ListRecipePreview items={searchResults} />
-{:else}
-	<slot name="noResultsState">
-		<p>{$t('components.searchList.noResults')}</p>
-	</slot>
+{:else if noResultsState}{@render noResultsState()}{:else}
+	<p>{$t('components.searchList.noResults')}</p>
 {/if}
 
 <style lang="scss">

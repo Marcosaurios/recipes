@@ -3,7 +3,11 @@
 	import type { Recipe } from '$types';
 	import { parseMd } from '../atoms/markdown';
 
-	export let recipe: Recipe;
+	interface Props {
+		recipe: Recipe;
+	}
+
+	let { recipe }: Props = $props();
 </script>
 
 <h1>{recipe.title}</h1>

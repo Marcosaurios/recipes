@@ -6,29 +6,35 @@
 	import { RecipePreview } from '../molecules';
 	import SearchList from '../organisms/SearchList.svelte';
 
-	export let recipes: Recipe[];
-	export let categories: TCategory[];
+	interface Props {
+		recipes: Recipe[];
+		categories: TCategory[];
+	}
+
+	let { recipes, categories }: Props = $props();
 
 	let slideshowItems = recipes.slice(0, 3);
 </script>
 
 <SearchList {recipes}>
-	<svelte:fragment slot="emptyState">
-		<p>{$t('templates.landing.lastRecipe')}</p>
-		<Slideshow>
-			{#each slideshowItems as recipe}
-				<RecipePreview {recipe} />
-			{/each}
-		</Slideshow>
+	{#snippet emptyState()}
+	
+			<p>{$t('templates.landing.lastRecipe')}</p>
+			<Slideshow>
+				{#each slideshowItems as recipe}
+					<RecipePreview {recipe} />
+				{/each}
+			</Slideshow>
 
-		<p>{$t('templates.landing.categories')}</p>
+			<p>{$t('templates.landing.categories')}</p>
 
-		<div class="categories">
-			{#each categories as category}
-				<Category {category} />
-			{/each}
-		</div>
-	</svelte:fragment>
+			<div class="categories">
+				{#each categories as category}
+					<Category {category} />
+				{/each}
+			</div>
+		
+	{/snippet}
 </SearchList>
 
 <style lang="scss">

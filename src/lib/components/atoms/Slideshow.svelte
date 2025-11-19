@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import Carousel from 'svelte-carousel';
 	import { browser } from '$app/environment';
 
-	export let config = {
+	let { config = {
 		arrows: false,
 		infinite: true,
 		initialPageIndex: 0,
@@ -13,11 +13,11 @@
 		pauseOnFocus: true,
 		autoplayProgressVisible: true,
 		dots: false
-	};
+	}, children } = $props();
 </script>
 
 {#if browser}
 	<Carousel {...config}>
-		<slot></slot>
+		{@render children?.()}
 	</Carousel>
 {/if}

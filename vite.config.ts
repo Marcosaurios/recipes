@@ -13,7 +13,7 @@ export default defineConfig(async () => {
 		],
 		define: {
 			__ALL_RECIPES__: cms?.recipes,
-			__RECIPE_BY_SLUG__: cms?.bySlug,
+			__RECIPE_BY_SLUG__: cms?.byRecipe,
 			__RECIPES_BY_CATEGORY__: cms?.byCategories,
 			__CATEGORIES__: cms?.categories
 		}

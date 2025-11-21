@@ -5,7 +5,7 @@ export type Parser = {
   process: (_i: Entry<TypeRecetaSkeleton, undefined, string>[]) => void,
 
   byCategories: Record<string, Recipe[]>,
-  bySlug: Record<string, Recipe>,
+  byRecipe: Record<string, Recipe>,
   recipes: Recipe[],
   categories: Category[],
 
@@ -14,7 +14,7 @@ export type Parser = {
 
 export const parser: Parser = {
   byCategories: {},
-  bySlug: {},
+  byRecipe: {},
   recipes: [],
   categories: [],
 
@@ -27,16 +27,14 @@ export const parser: Parser = {
       .map(c => ({ name: c, url: linkBuilderFor.category(c) }))
   },
   recipe: (r) => {
-    const parsed = parseRecipe(r)
+    const newRecipe = parseRecipe(r)
+    parser.recipes.push(newRecipe)
 
-    parsed.category.forEach((cat) => {
-      if (Array.isArray(parser.byCategories[cat])) {
-        parser.byCategories[cat].push(parsed)
-      }
-      parser.byCategories[cat] = [parsed]
-    })
-    parser.bySlug[parsed.slug] = parsed
-    parser.recipes.push(parsed)
+    newRecipe.category.forEach(category => Array.isArray(parser.byCategories[category])
+      ? parser.byCategories[category].push(newRecipe)
+      : parser.byCategories[category] = [newRecipe]
+    )
+    parser.byRecipe[newRecipe.slug] = newRecipe
   }
 }
 
@@ -59,7 +57,7 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
 
   let imageMain: string = ''
   if (Array.isArray(r.fields.imageMain)) {
-    imageMain = extractCloudinaryImageURL((r.fields.imageMain as ImageCMS[])[0])
+    imageMain = extractCloudinaryImageURL(r.fields.imageMain[0] as ImageCMS)
   }
 
   return {

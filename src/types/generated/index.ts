@@ -1,1 +1,1 @@
-export type { TypeReceta, TypeRecetaFields, TypeRecetaSkeleton } from "./TypeReceta";
+export type { TypeReceta, TypeRecetaFields, TypeRecetaSkeleton } from './TypeReceta'

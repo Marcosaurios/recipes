@@ -1,28 +1,28 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import type { Recipe } from '$types';
-	import InputBox from '../atoms/InputBox.svelte';
-	import ListRecipePreview from '../molecules/ListRecipePreview.svelte';
+	import { t } from '$lib/i18n'
+	import type { Recipe } from '$types'
+	import InputBox from '../atoms/InputBox.svelte'
+	import ListRecipePreview from '../molecules/ListRecipePreview.svelte'
 
 	interface Props {
-		recipes?: Recipe[];
-		emptyState?: import('svelte').Snippet;
-		noResultsState?: import('svelte').Snippet;
+		recipes?: Recipe[]
+		emptyState?: import('svelte').Snippet
+		noResultsState?: import('svelte').Snippet
 	}
 
-	let { recipes = [], emptyState, noResultsState }: Props = $props();
+	let { recipes = [], emptyState, noResultsState }: Props = $props()
 
-	let searchTerm: string = $state('');
-	let searchResults: Recipe[] = $state([]);
+	let searchTerm: string = $state('')
+	let searchResults: Recipe[] = $state([])
 
-	let hasSearchterm = $derived(searchTerm !== '');
+	let hasSearchterm = $derived(searchTerm !== '')
 
 	$effect(() => {
 		searchResults = hasSearchterm
 			? recipes.filter((r) => r.title.toLowerCase().includes(searchTerm.toLowerCase()))
-			: recipes;
-	});
-	let hasResults = $derived(searchResults.length > 0);
+			: recipes
+	})
+	let hasResults = $derived(searchResults.length > 0)
 </script>
 
 <div class="content">

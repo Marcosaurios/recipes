@@ -1,16 +1,16 @@
 <script lang="ts">
-	import type { Recipe } from '$types';
-	import { formatDuration } from '$lib/components/utils';
-	import Clock from '~icons/fa-solid/clock';
+	import type { Recipe } from '$types'
+	import { formatDuration } from '$lib/components/utils'
+	import Clock from '~icons/fa-solid/clock'
 
 	interface Props {
-		type?: 'small' | 'expanded';
-		recipe: Recipe;
+		type?: 'small' | 'expanded'
+		recipe: Recipe
 	}
 
-	let { type = 'small', recipe }: Props = $props();
+	let { type = 'small', recipe }: Props = $props()
 
-	let expanded = $derived(type === 'expanded');
+	let expanded = $derived(type === 'expanded')
 </script>
 
 <div class="RecipePreview">
@@ -34,7 +34,7 @@
 </div>
 
 <style lang="scss" scoped>
-	@import '$lib/globals/variables.scss';
+	@use '$lib/globals/vars.scss';
 
 	.RecipePreview {
 		border-radius: 10px;
@@ -68,7 +68,7 @@
 
 			.title {
 				font-size: 1.5rem;
-				color: $fontColor;
+				color: vars.$fontColor;
 				flex-grow: 1;
 				padding-left: 1rem;
 				// TODO add text a11y
@@ -83,7 +83,7 @@
 				align-items: center;
 
 				width: 8rem;
-				color: $fontColor;
+				color: vars.$fontColor;
 				filter: grayscale(0.3);
 
 				span {

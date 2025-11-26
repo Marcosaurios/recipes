@@ -1,12 +1,12 @@
 <script lang="ts">
-	import CategoryPage from '$lib/components/templates/CategoryPage.svelte';
-	import type { PageData } from './$types';
+	import CategoryPage from '$lib/components/templates/CategoryPage.svelte'
+	import type { PageData } from './$types'
 
 	interface Props {
-		data: PageData;
+		data: PageData
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 </script>
 
-<CategoryPage items={data.recipes} category={data.category}/>
+<CategoryPage items={data.recipes} category={data.category} />

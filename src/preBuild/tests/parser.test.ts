@@ -35,8 +35,8 @@ describe('CMS parser', () => {
     parser.process(r)
 
     expect(parser.byCategories).toHaveProperty('starter')
-    expect(parser.bySlug).toHaveProperty('first-entry')
-    expect(parser.bySlug).toHaveProperty('2nd-entry')
+    expect(parser.byRecipe).toHaveProperty('first-entry')
+    expect(parser.byRecipe).toHaveProperty('2nd-entry')
     expect(parser.categories).toEqual([{ name: 'starter', url: '/categoria/starter' }, { name: 'finisher', url: '/categoria/finisher' }])
   })
 })

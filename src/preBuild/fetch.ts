@@ -2,7 +2,7 @@ import contentful from "contentful"
 import dotenv from "dotenv"
 
 import parser, { type Parser } from "./parser"
-import type { Recipe, TypeRecetaSkeleton } from "$types";
+import type { TypeRecetaSkeleton } from "$types";
 
 // CMS client init
 dotenv.config();

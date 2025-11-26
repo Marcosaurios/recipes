@@ -11,7 +11,7 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test": "vitest",
-		"cf-export-types": "cf-content-types-generator --v10 -t $VITE_CONTENTFUL_MANAGEMENT_TOKEN -s $VITE_CONTENTFUL_SPACE -o ./src/types/generated"
+		"cf-export-types": ". ./.env && cf-content-types-generator -X -t $VITE_CONTENTFUL_MANAGEMENT_TOKEN -s $VITE_CONTENTFUL_SPACE -o ./src/types/generated"
 	},
 	"devDependencies": {
 		"@iconify-json/fa-regular": "^1.2.2",

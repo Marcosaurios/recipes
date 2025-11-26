@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Recipe } from '$types';
-	import RecipePreview from './RecipePreview.svelte';
+	import type { Recipe } from '$types'
+	import RecipePreview from './RecipePreview.svelte'
 
 	interface Props {
-		items: Recipe[];
+		items: Recipe[]
 	}
 
-	let { items }: Props = $props();
+	let { items }: Props = $props()
 </script>
 
 <ul class="recipes">

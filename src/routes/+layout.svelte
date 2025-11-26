@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '$lib/i18n'
 	interface Props {
-		children?: import('svelte').Snippet;
+		children?: import('svelte').Snippet
 	}
 
-	let { children }: Props = $props();
+	let { children }: Props = $props()
 </script>
 
 <nav>
@@ -17,7 +17,7 @@
 </div>
 
 <style lang="scss">
-	@import '$lib/globals/styles.scss';
+	@use '$lib/globals/styles.scss';
 
 	// @include desktopView {
 	// 	:global(body) {

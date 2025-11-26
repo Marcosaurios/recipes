@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Category } from '$types';
+	import type { Category } from '$types'
 
 	interface Props {
-		category: Category;
+		category: Category
 	}
 
-	let { category }: Props = $props();
+	let { category }: Props = $props()
 </script>
 
 <a href={category.url} class="item">
@@ -13,8 +13,8 @@
 </a>
 
 <style lang="scss">
-	@import '$lib/globals/variables.scss';
-	@import '$lib/globals/styles.scss';
+	@use '$lib/globals/vars.scss';
+	@use '$lib/globals/styles.scss';
 
 	.item {
 		display: flex;
@@ -28,13 +28,13 @@
 		border-radius: 10px;
 
 		text-decoration: none;
-		color: $fontColor;
-		@include darken;
+		color: vars.$fontColor;
+		@include styles.darken;
 
 		transition: filter 200ms linear;
 
 		&:hover {
-			@include undarken;
+			@include styles.undarken;
 		}
 	}
 </style>

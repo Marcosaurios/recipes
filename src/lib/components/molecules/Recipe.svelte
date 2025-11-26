@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import type { Recipe } from '$types';
-	import { parseMd } from '../atoms/markdown';
+	import { t } from '$lib/i18n'
+	import type { Recipe } from '$types'
+	import { parseMd } from '../atoms/markdown'
 
 	interface Props {
-		recipe: Recipe;
+		recipe: Recipe
 	}
 
-	let { recipe }: Props = $props();
+	let { recipe }: Props = $props()
 </script>
 
 <h1>{recipe.title}</h1>
@@ -31,14 +31,14 @@
 <!-- TODO style checkbox -->
 
 <style lang="scss">
-	@import '$lib/globals/styles.scss';
+	@use '$lib/globals/styles.scss';
 
 	.ingredients {
 		display: flex;
 		flex-direction: column;
 		input:checked + label {
 			text-decoration: line-through;
-			@include darken;
+			@include styles.darken;
 		}
 	}
 

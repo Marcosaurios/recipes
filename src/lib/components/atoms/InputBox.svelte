@@ -1,18 +1,17 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { onMount } from 'svelte';
+	import { t } from '$lib/i18n'
+	import { onMount } from 'svelte'
 
 	interface Props {
-		value: string;
-		placeholder?: string;
+		value: string
+		placeholder?: string
 	}
 
-	let { value = $bindable(), placeholder = $t('components.inputBox.placeholder') }: Props =
-		$props();
+	let { value = $bindable(), placeholder = $t('components.inputBox.placeholder') }: Props = $props()
 
-	let inputEl: HTMLInputElement = $state();
+	let inputEl: HTMLInputElement = $state()
 
-	onMount(() => (inputEl.value = value));
+	onMount(() => (inputEl.value = value))
 </script>
 
 <div class="Searchbox">
@@ -25,8 +24,8 @@
 </div>
 
 <style lang="scss">
-	@import '$lib/globals/styles.scss';
-	@import '$lib/globals/variables.scss';
+	@use '$lib/globals/styles.scss';
+	@use '$lib/globals/vars.scss';
 
 	.Searchbox {
 		position: relative;
@@ -34,7 +33,7 @@
 		// Both should share the exact same shape
 		input,
 		.placeholder {
-			font-family: $font;
+			font-family: vars.$font;
 			font-style: italic;
 
 			width: 100%;
@@ -57,17 +56,17 @@
 			z-index: 1;
 			margin: 0 auto;
 
-			border: 2px solid $fontColor;
-			color: $bgColor;
+			border: 2px solid vars.$fontColor;
+			color: vars.$bgColor;
 
-			background: linear-gradient(to left, transparent 50%, $fontColor 50%) right;
+			background: linear-gradient(to left, transparent 50%, vars.$fontColor 50%) right;
 			background-size: 210%;
 			transition: 0.15s cubic-bezier(0.165, 0.84, 0.44, 1);
 			&:focus {
 				background-position: left;
 			}
 			:not(&:focus) {
-				color: $fontColor;
+				color: vars.$fontColor;
 			}
 
 			&:hover ~ .placeholder {
@@ -85,8 +84,8 @@
 
 			top: 0;
 			left: 0;
-			color: $fontColor;
-			@include darken;
+			color: vars.$fontColor;
+			@include styles.darken;
 		}
 	}
 </style>

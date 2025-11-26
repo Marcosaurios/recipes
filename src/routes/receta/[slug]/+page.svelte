@@ -1,12 +1,12 @@
 <script lang="ts">
-	import RecipePage from '$lib/components/templates/RecipePage.svelte';
-	import type { PageData } from './$types';
+	import RecipePage from '$lib/components/templates/RecipePage.svelte'
+	import type { PageData } from './$types'
 
 	interface Props {
-		data: PageData;
+		data: PageData
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 </script>
 
 <RecipePage recipe={data} />

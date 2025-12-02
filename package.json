@@ -35,7 +35,7 @@
 		"prettier": "^3.7.3",
 		"prettier-plugin-svelte": "^3.2.6",
 		"sass-embedded": "^1.93.3",
-		"svelte": "^5.45.2",
+		"svelte": "^5.45.3",
 		"svelte-carousel": "^1.0.25",
 		"svelte-check": "^4.3.4",
 		"sveltekit-i18n": "^2.4.2",

@@ -1,41 +1,25 @@
 <script lang="ts">
+	// deprecated
 	import { t } from '$lib/i18n'
+	import { store } from '$lib/store/state.svelte'
 	import type { Recipe } from '$types'
-	import InputBox from '../atoms/InputBox.svelte'
-	import ListRecipePreview from '../molecules/ListRecipePreview.svelte'
+	import RecipePreviewList from '../molecules/RecipePreviewList.svelte'
 
 	interface Props {
-		recipes?: Recipe[]
-		emptyState?: import('svelte').Snippet
-		noResultsState?: import('svelte').Snippet
+		recipes: Recipe[]
 	}
 
-	let { recipes = [], emptyState, noResultsState }: Props = $props()
+	let { recipes = [] }: Props = $props()
 
-	let searchTerm: string = $state('')
-	let searchResults: Recipe[] = $state([])
-
-	let hasSearchterm = $derived(searchTerm !== '')
-
-	$effect(() => {
-		searchResults = hasSearchterm
-			? recipes.filter((r) => r.title.toLowerCase().includes(searchTerm.toLowerCase()))
-			: recipes
-	})
-	let hasResults = $derived(searchResults.length > 0)
+	const results = $derived(
+		recipes.filter((r) => r.title.toLowerCase().includes(store.searchTerm.toLowerCase()))
+	)
+	const hasResults = $derived(results.length > 0)
 </script>
 
-<div class="content">
-	<InputBox bind:value={searchTerm} />
-</div>
-
-{#if !hasSearchterm}
-	{#if emptyState}{@render emptyState()}{:else}
-		<p>This is the empty state</p>
-	{/if}
-{:else if hasResults}
-	<ListRecipePreview items={searchResults} />
-{:else if noResultsState}{@render noResultsState()}{:else}
+{#if hasResults}
+	<RecipePreviewList items={results} />
+{:else}
 	<p>{$t('components.searchList.noResults')}</p>
 {/if}
 

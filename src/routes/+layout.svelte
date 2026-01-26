@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { t } from '$lib/i18n'
+	import Navbar from '$lib/components/molecules/Navbar.svelte'
+	// import { searchTermSS } from '$lib/store/state.svelte'
 	interface Props {
 		children?: import('svelte').Snippet
 	}
@@ -7,28 +8,13 @@
 	let { children }: Props = $props()
 </script>
 
-<nav>
-	<a href="/">Volver a inicio WIP</a>
-	<h1>{$t('templates.landing.title')}</h1>
-</nav>
-
-<div>
+<Navbar />
+<main>
 	{@render children?.()}
-</div>
+</main>
 
-<style lang="scss">
-	@use '$lib/globals/styles.scss';
-
-	// @include desktopView {
-	// 	:global(body) {
-	// 		background-color: red;
-	// 	}
-	// }
-	div {
+<style lang="scss" scoped>
+	main {
 		padding: 0 1rem 1rem 1rem;
-	}
-
-	h1 {
-		text-align: center;
 	}
 </style>

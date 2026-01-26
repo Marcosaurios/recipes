@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Recipe } from '$types'
 	import { formatDuration } from '$lib/components/utils'
-	import Clock from '~icons/fa-solid/clock'
+	import Clock from '~icons/fa7-solid/clock'
 
 	interface Props {
 		type?: 'small' | 'expanded'

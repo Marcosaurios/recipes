@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CategoryPage from '$lib/components/templates/CategoryPage.svelte'
+	import CategoryPage from '$lib/components/templates/RecipesCategory.svelte'
 	import type { PageData } from './$types'
 
 	interface Props {

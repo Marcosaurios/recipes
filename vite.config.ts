@@ -7,7 +7,7 @@ import { getAllRecipes } from './src/preBuild/fetch'
 export default defineConfig(async () => {
 	const cms = await getAllRecipes()
 	return {
-		plugins: [sveltekit(), Icons({ compiler: 'svelte' })],
+		plugins: [sveltekit(), Icons({ compiler: 'svelte', defaultClass: 'icon' })],
 		define: {
 			__ALL_RECIPES__: cms?.recipes,
 			__RECIPE_BY_SLUG__: cms?.byRecipe,

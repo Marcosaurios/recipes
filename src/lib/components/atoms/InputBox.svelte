@@ -7,36 +7,29 @@
 		placeholder?: string
 	}
 
-	let { value = $bindable(), placeholder = $t('components.inputBox.placeholder') }: Props = $props()
-
-	let inputEl: HTMLInputElement = $state()
-
-	onMount(() => (inputEl.value = value))
+	let { value = $bindable() } = $props()
 </script>
 
-<div class="Searchbox">
-	<input type="text" bind:this={inputEl} oninput={() => (value = inputEl.value)} />
-	{#if !value}
-		<span class="placeholder">
-			{placeholder}
-		</span>
-	{/if}
+<div class="InputBox">
+	<input type="text" bind:value />
 </div>
 
 <style lang="scss">
 	@use '$lib/globals/styles.scss';
 	@use '$lib/globals/vars.scss';
 
-	.Searchbox {
-		position: relative;
+	$border: 2px;
 
-		// Both should share the exact same shape
-		input,
-		.placeholder {
+	.InputBox {
+		width: 100%;
+		position: relative;
+		margin: 4px;
+
+		input {
 			font-family: vars.$font;
 			font-style: italic;
 
-			width: 100%;
+			width: calc(100% - $border * 2);
 			height: 2rem;
 			padding: 0;
 
@@ -56,7 +49,7 @@
 			z-index: 1;
 			margin: 0 auto;
 
-			border: 2px solid vars.$fontColor;
+			border: $border solid vars.$fontColor;
 			color: vars.$bgColor;
 
 			background: linear-gradient(to left, transparent 50%, vars.$fontColor 50%) right;
@@ -72,20 +65,6 @@
 			&:hover ~ .placeholder {
 				filter: brightness(0.9);
 			}
-		}
-
-		.placeholder {
-			position: absolute;
-			display: flex;
-			align-items: center;
-			z-index: -1;
-			width: fit-content;
-			border: 2px solid transparent;
-
-			top: 0;
-			left: 0;
-			color: vars.$fontColor;
-			@include styles.darken;
 		}
 	}
 </style>

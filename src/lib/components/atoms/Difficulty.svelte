@@ -1,6 +1,5 @@
 <script lang="ts">
-	import SolidStar from '~icons/fa-solid/star'
-	import OutlineStar from '~icons/fa-regular/star'
+	import Star from '~icons/fa7-solid/star'
 
 	interface Props {
 		filled: number
@@ -13,8 +12,9 @@
 
 {#each stars as _, i}
 	{#if i < filled}
-		<SolidStar></SolidStar>
+		<Star />
 	{:else}
-		<OutlineStar></OutlineStar>
+		TODO!! style the Star to outline
+		<Star />
 	{/if}
 {/each}

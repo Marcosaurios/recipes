@@ -11,5 +11,13 @@
 	"recipe": {
 		"ingredients": "Ingredientes",
 		"description": "Elaboración"
+	},
+	"navbar": {
+		"title": "El legado Santanero",
+		"sections": {
+			"home": "Inicio",
+			"search": "Buscar",
+			"about": "Nosotros"
+		}
 	}
 }

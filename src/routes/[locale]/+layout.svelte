@@ -15,7 +15,7 @@
 	}
 </script>
 
-<Navbar />
+<Navbar locale={data.locale} />
 <main>
 	<Categories categories={data.categories} active={selectedCategory} />
 	{#if store.showSearchResults}

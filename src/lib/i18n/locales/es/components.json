@@ -17,7 +17,16 @@
 		"sections": {
 			"home": "Inicio",
 			"search": "Buscar",
+			"language": "Idioma",
 			"about": "Nosotros"
+		}
+	},
+	"error": {
+		"404": "Ups! No hemos encontrado eso que andas buscando!"
+	},
+	"templates": {
+		"landingPage": {
+			"lastRecipes": "Últimas recetas añadidas"
 		}
 	}
 }

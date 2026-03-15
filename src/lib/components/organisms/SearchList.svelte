@@ -1,5 +1,4 @@
 <script lang="ts">
-	// deprecated
 	import { t } from '$lib/i18n'
 	import { store } from '$lib/store/state.svelte'
 	import type { Recipe } from '$types'
@@ -7,9 +6,10 @@
 
 	interface Props {
 		recipes: Recipe[]
+		onRecipeOpened?: () => void
 	}
 
-	let { recipes = [] }: Props = $props()
+	let { recipes = [], onRecipeOpened }: Props = $props()
 
 	const results = $derived(
 		recipes.filter((r) => r.title.toLowerCase().includes(store.searchTerm.toLowerCase()))
@@ -18,18 +18,12 @@
 </script>
 
 {#if hasResults}
-	<RecipePreviewList items={results} />
+	<RecipePreviewList items={results} {onRecipeOpened} />
 {:else}
 	<p>{$t('components.searchList.noResults')}</p>
 {/if}
 
 <style lang="scss">
-	.content {
-		display: block;
-		margin: 0 auto;
-		width: 75%;
-	}
-
 	p {
 		text-align: center;
 		margin: 3rem;

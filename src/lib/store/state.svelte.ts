@@ -1,3 +1,5 @@
 export const store = $state({
-	searchTerm: ''
+	// Search
+	searchTerm: '',
+	showSearchResults: false
 })

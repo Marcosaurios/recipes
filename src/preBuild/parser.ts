@@ -1,54 +1,62 @@
 import type { Entry } from 'contentful'
 import type { ImageCMS, Recipe, TypeRecetaSkeleton, Category } from '$types'
+import type { CMSLanguages, UILocales } from './types'
+import { cmsLangToUILang } from './types'
+
+const routeSegments: Record<UILocales, { recipe: string; category: string }> = {
+	es: { recipe: 'receta', category: 'categoria' },
+	en: { recipe: 'recipe', category: 'category' }
+}
+
+const linkBuilderFor = (locale: UILocales) => ({
+	recipe: (slug: string) => `/${locale}/${routeSegments[locale].recipe}/${slug}`,
+	category: (categoryName: string) => `/${locale}/${routeSegments[locale].category}/${categoryName}`
+})
 
 export type Parser = {
-	process: (_i: Entry<TypeRecetaSkeleton, undefined, string>[]) => void
-
 	byCategories: Record<string, Recipe[]>
 	byRecipe: Record<string, Recipe>
-	recipes: Recipe[]
+	allRecipes: Recipe[]
 	categories: Category[]
 
-	recipe: (_r: Entry<TypeRecetaSkeleton, undefined, string>) => void
+	process: (_items: Entry<TypeRecetaSkeleton, undefined, string>[], _locale: CMSLanguages) => void
+	processRecipe: (_r: Entry<TypeRecetaSkeleton, undefined, string>) => void
 }
 
-export const parser: Parser = {
-	byCategories: {},
-	byRecipe: {},
-	recipes: [],
-	categories: [],
+function createParser(): Parser {
+	const parser: Parser = {
+		byCategories: {},
+		byRecipe: {},
+		allRecipes: [],
+		categories: [],
 
-	process: (items) => {
-		items.map(parser.recipe)
+		process(items, cmsLocale) {
+			const locale = cmsLangToUILang(cmsLocale)
+			items.forEach((r) => parser.processRecipe(r))
+			parser.allRecipes.sort(sortByCreatedAt)
+			parser.categories = Object.keys(parser.byCategories).map((c) => ({
+				name: c,
+				url: linkBuilderFor(locale).category(c)
+			}))
+		},
 
-		parser.recipes.sort(sortByCreatedAt)
-		parser.categories = Object.keys(parser.byCategories).map((c) => ({
-			name: c,
-			url: linkBuilderFor.category(c)
-		}))
-	},
-	recipe: (r) => {
-		const newRecipe = parseRecipe(r)
-		parser.recipes.push(newRecipe)
-
-		newRecipe.category.forEach((category) =>
-			Array.isArray(parser.byCategories[category])
-				? parser.byCategories[category].push(newRecipe)
-				: (parser.byCategories[category] = [newRecipe])
-		)
-		parser.byRecipe[newRecipe.slug] = newRecipe
+		processRecipe(r) {
+			const newRecipe = parseRecipe(r)
+			parser.allRecipes.push(newRecipe)
+			newRecipe.category.forEach((category) =>
+				Array.isArray(parser.byCategories[category])
+					? parser.byCategories[category].push(newRecipe)
+					: (parser.byCategories[category] = [newRecipe])
+			)
+			parser.byRecipe[newRecipe.slug] = newRecipe
+		}
 	}
+	return parser
 }
 
-// Generates the links used by this app
-const linkBuilderFor = {
-	recipe: (slug: string) => `/receta/${slug}`,
-	category: (categoryName: string) => `/categoria/${categoryName}`
-}
-
-// Formatter to convert a Receta from the CMS to a Recipe
 function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
-	const { updatedAt, createdAt } = r.sys
+	const { updatedAt, createdAt, locale } = r.sys
+	const lang = cmsLangToUILang(locale as CMSLanguages)
 	const extractCloudinaryImageURL = (img: ImageCMS): string => img.original_secure_url
 
 	let images: string[] = []
@@ -63,7 +71,7 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
 
 	return {
 		...r.fields,
-		url: linkBuilderFor.recipe(r.fields.slug),
+		url: linkBuilderFor(lang).recipe(r.fields.slug),
 		images,
 		imageMain,
 		createdAt,
@@ -74,11 +82,10 @@ function parseRecipe(r: Entry<TypeRecetaSkeleton, undefined, string>): Recipe {
 function sortByCreatedAt(recipeA: Recipe, recipeB: Recipe) {
 	const dateA = new Date(recipeA.createdAt).getTime()
 	const dateB = new Date(recipeB.createdAt).getTime()
-	// A is lower than B if dates are lower
 	if (dateA < dateB || dateA == dateB) {
 		return -1
 	}
 	return 1
 }
 
-export default parser
+export default createParser

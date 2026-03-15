@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { store } from '$lib/store/state.svelte'
-	import SearchList from '$lib/components/organisms/SearchList.svelte'
-	import Categories from '$lib/components/molecules/Categories.svelte'
+	import RecipePreview from '../molecules/RecipePreview.svelte'
+	import type { Recipe } from '$types'
+	import { t } from '$lib/i18n'
 
-	const { recipes, categories } = $props()
-	const isSearching = $derived(store.searchTerm.length)
+	interface Props {
+		recipes: Recipe[]
+	}
+	const { recipes }: Props = $props()
+	const lastRecipe = $derived(recipes[recipes.length - 1])
 </script>
 
-{#if !isSearching}
-	<Categories {categories} />
-{:else}
-	<SearchList {recipes} />
-{/if}
+<div>{$t('components.templates.landingPage.lastRecipes')}</div>
+<RecipePreview recipe={lastRecipe} type="expanded" />

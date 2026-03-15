@@ -6,9 +6,10 @@
 	interface Props {
 		type?: 'small' | 'expanded'
 		recipe: Recipe
+		onclick?: () => void
 	}
 
-	let { type = 'small', recipe }: Props = $props()
+	let { type = 'small', recipe, onclick }: Props = $props()
 
 	let expanded = $derived(type === 'expanded')
 </script>
@@ -19,6 +20,7 @@
 		class="link"
 		class:expanded
 		style:background-image={`url("${recipe.imageMain}")`}
+		{onclick}
 	>
 		<span class="title" class:expanded>
 			{recipe.title}
@@ -38,6 +40,7 @@
 
 	.RecipePreview {
 		border-radius: 10px;
+		padding-top: 15px;
 
 		a.link {
 			display: flex;

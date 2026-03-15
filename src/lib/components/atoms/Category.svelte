@@ -3,12 +3,16 @@
 
 	interface Props {
 		category: Category
+		isSelected: boolean
 	}
 
-	let { category }: Props = $props()
+	let { category, isSelected }: Props = $props()
 </script>
 
-<a href={category.url} class="item">
+<a
+	href={category.url}
+	class={['item', isSelected && 'isSelected']}
+>
 	{`${category.name}`.toUpperCase()}
 </a>
 
@@ -21,8 +25,7 @@
 		align-items: center;
 		justify-content: center;
 
-		max-width: 100px;
-		padding: 2rem;
+		padding: 0.25rem 1rem;
 
 		border: 1px solid white;
 		border-radius: 10px;
@@ -35,6 +38,12 @@
 
 		&:hover {
 			@include styles.undarken;
+		}
+
+		&.isSelected {
+			// filter: invert(100%);
+			background-color: vars.$fontColor;
+			color: vars.$bgColor;
 		}
 	}
 </style>

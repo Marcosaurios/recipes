@@ -4,15 +4,16 @@
 
 	interface Props {
 		items: Recipe[]
+		onRecipeOpened?: () => void
 	}
 
-	let { items }: Props = $props()
+	let { items, onRecipeOpened = () => {} }: Props = $props()
 </script>
 
 <ul class="recipes">
 	{#each items as recipe}
 		<li>
-			<RecipePreview {recipe} />
+			<RecipePreview {recipe} onclick={onRecipeOpened} />
 		</li>
 	{/each}
 </ul>

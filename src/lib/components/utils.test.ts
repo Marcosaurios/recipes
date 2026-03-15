@@ -15,5 +15,9 @@ describe('Utils', () => {
 			const r = formatDuration(30)
 			expect(r).equal('30min')
 		})
+		it('Should convert 600min to 10h', () => {
+			const r = formatDuration(600)
+			expect(r).equal('10h')
+		})
 	})
 })

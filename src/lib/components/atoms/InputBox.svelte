@@ -1,66 +1,47 @@
 <script lang="ts">
-	import { t } from '$lib/i18n'
-	import { onMount } from 'svelte'
+	import type { HTMLInputAttributes } from 'svelte/elements'
+	import { outclick } from '../directives'
 
-	interface Props {
-		value: string
-		placeholder?: string
+	interface Props extends HTMLInputAttributes {
+		value?: string
+		onclickoutside?: () => void
 	}
 
-	let { value = $bindable(), placeholder = $t('components.inputBox.placeholder') }: Props = $props()
-
-	let inputEl: HTMLInputElement = $state()
-
-	onMount(() => (inputEl.value = value))
+	let { value = $bindable(''), onclickoutside, ...rest }: Props = $props()
 </script>
 
-<div class="Searchbox">
-	<input type="text" bind:this={inputEl} oninput={() => (value = inputEl.value)} />
-	{#if !value}
-		<span class="placeholder">
-			{placeholder}
-		</span>
-	{/if}
+<div class="InputBox">
+	<input type="text" bind:value {...rest} use:outclick {onclickoutside} />
 </div>
 
 <style lang="scss">
 	@use '$lib/globals/styles.scss';
 	@use '$lib/globals/vars.scss';
 
-	.Searchbox {
+	$border: 2px;
+	.InputBox {
+		box-sizing: border-box;
 		position: relative;
-
-		// Both should share the exact same shape
-		input,
-		.placeholder {
-			font-family: vars.$font;
-			font-style: italic;
-
-			width: 100%;
-			height: 2rem;
-			padding: 0;
-
-			border-radius: 20px;
-			background-color: transparent;
-
-			font-size: 1rem;
-			text-indent: 16px;
-
-			transition: 0.3s ease-in-out;
-
-			// CSS reset
-			outline: none;
-		}
+		padding: 4px;
 
 		input {
-			z-index: 1;
-			margin: 0 auto;
+			box-sizing: border-box;
+			width: 100%;
+			height: 2rem;
+			border-radius: 20px;
 
-			border: 2px solid vars.$fontColor;
-			color: vars.$bgColor;
+			font-family: vars.$font;
+			font-style: italic;
+			font-size: 1rem;
+			text-indent: 16px;
+			// CSS reset
+			outline: none;
+
+			border: $border solid vars.$fontColor;
 
 			background: linear-gradient(to left, transparent 50%, vars.$fontColor 50%) right;
 			background-size: 210%;
+			background-color: transparent;
 			transition: 0.15s cubic-bezier(0.165, 0.84, 0.44, 1);
 			&:focus {
 				background-position: left;
@@ -68,24 +49,6 @@
 			:not(&:focus) {
 				color: vars.$fontColor;
 			}
-
-			&:hover ~ .placeholder {
-				filter: brightness(0.9);
-			}
-		}
-
-		.placeholder {
-			position: absolute;
-			display: flex;
-			align-items: center;
-			z-index: -1;
-			width: fit-content;
-			border: 2px solid transparent;
-
-			top: 0;
-			left: 0;
-			color: vars.$fontColor;
-			@include styles.darken;
 		}
 	}
 </style>

@@ -1,22 +1,22 @@
 import { describe, expect, it } from 'vitest'
 import type { Entry, EntryFields } from 'contentful'
 
-import parser from '../parser'
+import createParser from '../parser'
 import type { TypeRecetaSkeleton } from '$types'
-import { url } from 'inspector'
 
 describe('CMS parser', () => {
 	it('Should load a single recipe successfully', () => {
+		const parser = createParser()
 		const cmsRecipe = MakeRecipeHelper('one title', 'first-entry', ['starter'])
 
-		parser.process([cmsRecipe])
+		parser.process([cmsRecipe], 'es-ES')
 
-		expect(parser.recipes[0]).toMatchObject({
+		expect(parser.allRecipes[0]).toMatchObject({
 			title: 'one title',
 			ingredients: ['potatoes'],
 			description: 'A description',
 			slug: 'first-entry',
-			url: '/receta/first-entry',
+			url: '/es/receta/first-entry',
 			minutes: 5,
 			difficulty: 10,
 			category: ['starter'],
@@ -26,20 +26,21 @@ describe('CMS parser', () => {
 	})
 
 	it('Should load categories with their recipes successfully', () => {
+		const parser = createParser()
 		const r: Entry<TypeRecetaSkeleton, undefined, string>[] = [
 			MakeRecipeHelper('one title', 'first-entry', ['starter']),
 			MakeRecipeHelper('2nd title', '2nd-entry', ['starter']),
 			MakeRecipeHelper('2nd title', '2nd-entry', ['finisher'])
 		]
 
-		parser.process(r)
+		parser.process(r, 'es-ES')
 
 		expect(parser.byCategories).toHaveProperty('starter')
 		expect(parser.byRecipe).toHaveProperty('first-entry')
 		expect(parser.byRecipe).toHaveProperty('2nd-entry')
 		expect(parser.categories).toEqual([
-			{ name: 'starter', url: '/categoria/starter' },
-			{ name: 'finisher', url: '/categoria/finisher' }
+			{ name: 'starter', url: '/es/categoria/starter' },
+			{ name: 'finisher', url: '/es/categoria/finisher' }
 		])
 	})
 })

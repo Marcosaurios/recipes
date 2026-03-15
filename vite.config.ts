@@ -5,14 +5,24 @@ import Icons from 'unplugin-icons/vite'
 import { getAllRecipes } from './src/preBuild/fetch'
 
 export default defineConfig(async () => {
-	const cms = await getAllRecipes()
+	const [es, en] = await Promise.all([getAllRecipes('es-ES'), getAllRecipes('en-EU')])
 	return {
-		plugins: [sveltekit(), Icons({ compiler: 'svelte' })],
+		plugins: [sveltekit(), Icons({ compiler: 'svelte', defaultClass: 'icon' })],
 		define: {
-			__ALL_RECIPES__: cms?.recipes,
-			__RECIPE_BY_SLUG__: cms?.byRecipe,
-			__RECIPES_BY_CATEGORY__: cms?.byCategories,
-			__CATEGORIES__: cms?.categories
+			__RECIPES__: {
+				es: {
+					allRecipes: es.allRecipes,
+					bySlug: es.byRecipe,
+					byCategory: es.byCategories,
+					categories: es.categories
+				},
+				en: {
+					allRecipes: en.allRecipes,
+					bySlug: en.byRecipe,
+					byCategory: en.byCategories,
+					categories: en.categories
+				}
+			}
 		}
 	}
 })

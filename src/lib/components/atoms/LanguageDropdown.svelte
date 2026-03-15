@@ -38,6 +38,7 @@
 
 <style lang="scss">
 	@use '$lib/globals/vars';
+	@use '$lib/globals/styles';
 
 	.dropdown {
 		position: absolute;
@@ -45,7 +46,6 @@
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 200;
-
 		display: flex;
 		flex-direction: column;
 		border-radius: 8px;
@@ -53,6 +53,11 @@
 		border: 1px solid rgba(vars.$fontColor, 0.2);
 		background-color: vars.$bgColor;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+		@include styles.desktopView() {
+			bottom: auto;
+			top: 100%;
+		}
 	}
 
 	button {

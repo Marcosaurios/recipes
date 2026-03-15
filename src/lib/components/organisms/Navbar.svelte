@@ -7,7 +7,6 @@
 	import Button from '../atoms/Button.svelte'
 	import LanguageDropdown from '../atoms/LanguageDropdown.svelte'
 	import type { UILocales } from '../../../preBuild/types'
-	import { browser } from '$app/environment'
 
 	import House from '~icons/fa7-solid/house?raw'
 	import Users from '~icons/fa7-solid/users?raw'
@@ -20,6 +19,13 @@
 		callback?: () => void
 	}
 
+	interface Props {
+		locale: string
+	}
+
+	let { locale }: Props = $props()
+	const currentLocale = $derived(locale as UILocales)
+
 	// Search
 
 	// For mobile we show/hide the searchbar based on user touching the icon or not
@@ -28,22 +34,18 @@
 		searchBarEnabled = !searchBarEnabled
 	}
 
-	// Language dropdown
-	let languageDropdownOpen = $state(false)
-	const currentLocale = $derived(
-		browser ? (window.location.pathname.split('/').filter(Boolean)[0] as UILocales) : DEFAULT_LOCALE
-	)
-
-	function toggleLanguageDropdown() {
-		languageDropdownOpen = !languageDropdownOpen
-	}
-
 	$effect(() => {
 		store.showSearchResults = store.searchTerm.length > 0
 	})
 
 	const onclickoutside = () => {
 		searchBarEnabled = false
+	}
+
+	// Language dropdown
+	let languageDropdownOpen = $state(false)
+	function toggleLanguageDropdown() {
+		languageDropdownOpen = !languageDropdownOpen
 	}
 
 	const i18n_sections_key = 'components.navbar.sections'
@@ -216,6 +218,5 @@
 			order: initial;
 			clip-path: inset(0 0 0 0);
 		}
-
 	}
 </style>
